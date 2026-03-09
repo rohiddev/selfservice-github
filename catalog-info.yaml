@@ -1,0 +1,24 @@
+apiVersion: harness.io/v1
+kind: Component
+identifier: selfservice_github
+name: GitHub Self-Service Portal
+type: plugin
+owner: platform_engineering
+metadata:
+  orgIdentifier: default
+  projectIdentifier: platform_engineering
+  description: >
+    Slim self-service portal for GitHub Services. Provides a single Create Repository
+    card that launches the Harness IDP workflow — provisions a GitHub repo, Okta groups,
+    and GitHub Teams in one step.
+  tags:
+    - portal
+    - github
+    - self-service
+    - platform-engineering
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    harness.io/project-id: platform_engineering
+    github.com/project-slug: rohiddev/selfservice-github
+spec:
+  lifecycle: production
