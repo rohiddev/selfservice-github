@@ -74,8 +74,8 @@ Get the correct URL from:
 
 ```bash
 cd plugin
-npm install
-npm run build
+yarn install
+yarn build
 ```
 
 This produces a `dist/` folder with `index.cjs.js`, `index.esm.js`, `index.d.ts`.
@@ -83,7 +83,7 @@ This produces a `dist/` folder with `index.cjs.js`, `index.esm.js`, `index.d.ts`
 To package as a `.tgz` for upload:
 
 ```bash
-npm pack
+yarn pack
 # produces: internal-plugin-selfservice-github-0.1.0.tgz
 ```
 
@@ -98,39 +98,34 @@ npm pack
 
 ---
 
-### Step 4 — Enable and configure the plugin
+### Step 4 — Enable the plugin
 
-After upload, Harness IDP shows the plugin in the list.
+After upload, Harness IDP shows the plugin in the plugin list.
 
-1. Click the plugin → **Enable**
-2. Under **Configuration**, set the mount path (e.g. `/github-services`)
-3. Save
-
-Harness IDP automatically wires `SelfserviceGithubPage` to the mount path using the `rootRouteRef` declared in `plugin.ts`.
+1. Go to **Harness IDP → Admin → Plugins**
+2. Find `@internal/plugin-selfservice-github` → click **Enable**
+3. Save — the plugin is now available to mount in the Sidebar (Step 5)
 
 ---
 
-### Step 5 — Add to IDP nav (app-config.yaml / layout)
+### Step 5 — Mount in IDP Sidebar (IDP 2.0)
 
-In **Harness IDP → Admin → Layout**, add a nav entry pointing to your mount path:
+IDP 2.0 mounts plugins via the Sidebar Layout UI — no `app-config.yaml` route editing needed.
 
-```yaml
-# In your IDP layout configuration
-nav:
-  - title: GitHub Services
-    url: /github-services
-    icon: code
-```
+1. Go to **Harness IDP → Admin → Layout → Sidebar**
+2. Click **+ Add Item**
+3. Set:
 
-Or via `app-config.yaml` if you have direct access:
+| Field | Value |
+|---|---|
+| Label | GitHub Services |
+| Icon | `code` |
+| Path | `/github-services` |
+| Plugin | `@internal/plugin-selfservice-github` |
+| Component | `SelfserviceGithubPage` |
 
-```yaml
-app:
-  routes:
-    - path: /github-services
-      title: GitHub Services
-      component: '@internal/plugin-selfservice-github#SelfserviceGithubPage'
-```
+4. Drag the item to the desired position in the nav
+5. Save — the nav item appears immediately for all users with IDP access
 
 ---
 

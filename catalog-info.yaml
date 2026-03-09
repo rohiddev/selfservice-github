@@ -2,7 +2,7 @@ apiVersion: harness.io/v1
 kind: Component
 identifier: selfservice_github
 name: GitHub Self-Service Portal
-type: plugin
+type: service
 owner: platform_engineering
 metadata:
   orgIdentifier: default
