@@ -168,6 +168,54 @@ const useStyles = makeStyles(theme => ({
   pageInner: {
     padding: theme.spacing(4),
   },
+
+  // ── Hero banner ───────────────────────────────────────────────────────────
+  hero: {
+    background: 'linear-gradient(135deg, #00965E 0%, #007A4D 100%)',
+    borderRadius: 16,
+    padding: theme.spacing(4, 5),
+    marginBottom: theme.spacing(4),
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    color: '#fff',
+  },
+  heroLeft: {
+    display: 'flex',
+    flexDirection: 'column' as const,
+    gap: theme.spacing(1),
+  },
+  heroGreeting: {
+    fontSize: 13,
+    color: 'rgba(255,255,255,0.8)',
+    fontWeight: 500,
+  },
+  heroTitle: {
+    fontSize: 26,
+    fontWeight: 800,
+    color: '#fff',
+    lineHeight: 1.2,
+  },
+  heroSubtitle: {
+    fontSize: 14,
+    color: 'rgba(255,255,255,0.85)',
+    maxWidth: 480,
+    lineHeight: 1.6,
+  },
+  heroIconBox: {
+    width: 80,
+    height: 80,
+    borderRadius: 20,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  heroIcon: {
+    fontSize: '44px !important',
+    color: '#fff',
+  },
 }));
 
 export function GitHubPortal() {
@@ -257,6 +305,26 @@ export function GitHubPortal() {
               </div>
             </div>
           )}
+
+          {/* ── Hero banner ── */}
+          <div className={classes.hero}>
+            <div className={classes.heroLeft}>
+              {displayName && (
+                <Typography className={classes.heroGreeting}>
+                  Welcome back, {displayName.split(' ')[0]}
+                </Typography>
+              )}
+              <Typography className={classes.heroTitle}>
+                Developer Self-Service Portal
+              </Typography>
+              <Typography className={classes.heroSubtitle}>
+                Provision GitHub repositories, manage teams, and automate platform tasks — all from one place. No tickets, no waiting.
+              </Typography>
+            </div>
+            <div className={classes.heroIconBox}>
+              <Icon className={classes.heroIcon}>developer_board</Icon>
+            </div>
+          </div>
 
           <PageHeader
             icon="code"

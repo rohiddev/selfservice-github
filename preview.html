@@ -134,6 +134,27 @@
     transition: background 0.15s;
   }
   .btn-primary:hover { background: #007A4D; }
+
+  /* ── Hero Banner ────────────────────────────────────────────────────── */
+  .hero {
+    background: linear-gradient(135deg, #00965E 0%, #007A4D 100%);
+    border-radius: 16px;
+    padding: 32px 40px;
+    margin-bottom: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+  }
+  .hero-greeting { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 500; margin-bottom: 6px; }
+  .hero-title { font-size: 26px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 8px; }
+  .hero-subtitle { font-size: 14px; color: rgba(255,255,255,0.85); max-width: 480px; line-height: 1.6; }
+  .hero-icon-box {
+    width: 80px; height: 80px; border-radius: 20px;
+    background: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .hero-icon-box .material-icons { font-size: 44px; color: #fff; }
 </style>
 </head>
 <body>
@@ -178,6 +199,18 @@
       <div class="user-chip">
         <div class="avatar">RD</div>
         <span class="user-name">Rohid Dev</span>
+      </div>
+    </div>
+
+    <!-- Hero banner -->
+    <div class="hero">
+      <div>
+        <div class="hero-greeting">Welcome back, Rohid</div>
+        <div class="hero-title">Developer Self-Service Portal</div>
+        <div class="hero-subtitle">Provision GitHub repositories, manage teams, and automate platform tasks — all from one place. No tickets, no waiting.</div>
+      </div>
+      <div class="hero-icon-box">
+        <span class="material-icons">developer_board</span>
       </div>
     </div>
 
