@@ -105,13 +105,13 @@ const useStyles = makeStyles(theme => ({
   },
   actionButton: {
     borderRadius: 8,
-    textTransform: 'none',
+    textTransform: 'none' as const,
     fontWeight: 600,
     flexGrow: 1,
   },
   videoButton: {
     borderRadius: 8,
-    textTransform: 'none',
+    textTransform: 'none' as const,
     fontWeight: 600,
     color: '#00965E',
     borderColor: '#00965E',
