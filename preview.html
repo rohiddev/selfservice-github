@@ -321,7 +321,8 @@
     <span class="material-icons nav-chevron" id="chevron-fuse">expand_more</span>
   </div>
   <div class="nav-section-body" id="body-fuse">
-    <div class="nav-child" onclick="showPage('fuse-onboarding', this)">Onboarding</div>
+    <div class="nav-child" onclick="showPage('fuse-onboarding-request', this)">Onboarding-Request</div>
+    <div class="nav-child" onclick="showPage('fuse-onboarding-review', this)">Onboarding-Review</div>
   </div>
 
   <hr class="nav-divider">
@@ -440,6 +441,116 @@
       </div>
     </div>
 
+    <!-- ══ PAGE: Fuse Services — Review ══ -->
+    <div id="page-fuse-onboarding-review" class="page">
+      <div class="page-header">
+        <div class="page-header-row">
+          <div class="page-header-icon"><span class="material-icons">fact_check</span></div>
+          <div class="page-header-title">Onboarding Requests</div>
+        </div>
+        <div class="page-header-subtitle" id="review-subtitle">View all namespace onboarding requests.</div>
+        <hr class="page-header-divider">
+      </div>
+
+      <div style="overflow-x:auto;margin-top:16px;">
+        <table style="width:100%;border-collapse:collapse;font-size:13px;">
+          <thead>
+            <tr>
+              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Status</th>
+              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">SYS ID</th>
+              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">App Key</th>
+              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">App Name</th>
+              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Cluster</th>
+              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Cluster Zone</th>
+              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Subdomain</th>
+              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Requestor</th>
+              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Reviewer</th>
+              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Date Requested</th>
+            </tr>
+          </thead>
+          <tbody id="review-tbody">
+            <tr onclick="openReviewDetail('SYSID-09750')" style="cursor:pointer" onmouseover="this.style.background='#f8fffe'" onmouseout="this.style.background=''">
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0"><span style="background:#FFEBEE;color:#B71C1C;font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">Validation Failed</span></td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-weight:700">SYSID-09750</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">LQF</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Data Integration</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">p2</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">EKS</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">dev</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">SVC_PLATFORM</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">—</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Mar 15, 2026 05:01</td>
+            </tr>
+            <tr onclick="openReviewDetail('SYSID-08827')" style="cursor:pointer" onmouseover="this.style.background='#f8fffe'" onmouseout="this.style.background=''">
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0"><span style="background:#FFF9C4;color:#F57F17;font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">Pending Approval</span></td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-weight:700">SYSID-08827</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">IMB</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Security Platform</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">p2</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">EKS</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">dev</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">SVC_SERVICE</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">—</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Mar 12, 2026 12:25</td>
+            </tr>
+            <tr onclick="openReviewDetail('SYSID-09476')" style="cursor:pointer" onmouseover="this.style.background='#f8fffe'" onmouseout="this.style.background=''">
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0"><span style="background:#FFF9C4;color:#F57F17;font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">Pending Approval</span></td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-weight:700">SYSID-09476</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">YDX</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Limit Processing</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">p1</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">AWS-Openshift</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">qa</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">SUBRAMANIAN_K</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">—</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Mar 10, 2026 09:28</td>
+            </tr>
+            <tr onclick="openReviewDetail('SYSID-06759')" style="cursor:pointer" onmouseover="this.style.background='#f8fffe'" onmouseout="this.style.background=''">
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0"><span style="background:#E8F5E9;color:#2E7D32;font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">Success</span></td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-weight:700">SYSID-06759</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">TTU</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Pre-Clearance</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">p2</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">EKS</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">sit</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">MOULI_R</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Cindy A</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Mar 3, 2026 08:17</td>
+            </tr>
+            <tr onclick="openReviewDetail('SYSID-09472')" style="cursor:pointer" onmouseover="this.style.background='#f8fffe'" onmouseout="this.style.background=''">
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0"><span style="background:#FFF3E0;color:#E65100;font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">Rejected</span></td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-weight:700">SYSID-09472</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">OCY</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">OCY Platform</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">p2</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">EKS</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">dev</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">YESWANTH_R</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Cindy A</td>
+              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Feb 23, 2026 15:41</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Detail modal -->
+      <div id="review-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;display:none;align-items:center;justify-content:center">
+        <div style="background:#fff;border-radius:12px;width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.2)">
+          <div style="padding:20px 24px 0;display:flex;justify-content:space-between;align-items:flex-start">
+            <div>
+              <div id="modal-sysid" style="font-size:16px;font-weight:700;color:#1a1a1a"></div>
+              <div id="modal-date" style="font-size:12px;color:#888;margin-top:2px"></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px">
+              <span id="modal-status-chip"></span>
+              <button onclick="closeReviewModal()" style="background:none;border:none;cursor:pointer;font-size:20px;color:#666;line-height:1">×</button>
+            </div>
+          </div>
+          <div style="padding:16px 24px 24px" id="modal-body"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- ══ PAGE: TMS — Reserve Environment ══ -->
     <div id="page-tms-reserve-env" class="page">
       <div class="page-header">
@@ -530,8 +641,8 @@
       </div>
     </div>
 
-    <!-- ══ PAGE: Fuse Services — Onboarding ══ -->
-    <div id="page-fuse-onboarding" class="page">
+    <!-- ══ PAGE: Fuse Services — Request ══ -->
+    <div id="page-fuse-onboarding-request" class="page">
       <div class="page-header">
         <div class="page-header-row">
           <div class="page-header-icon"><span class="material-icons">dns</span></div>
@@ -719,6 +830,82 @@
     if (!title || !desc) { alert('Please fill in both fields.'); return; }
     document.getElementById('feature-form').style.display = 'none';
     document.getElementById('feature-success').style.display = 'flex';
+  }
+
+  // ── Review modal ─────────────────────────────────────────────────────────
+  // In preview: IS_PAAS_ADMIN = true to show approve/reject buttons
+  const IS_PAAS_ADMIN = true;
+
+  const REVIEW_DATA = {
+    'SYSID-09750': { sysId:'SYSID-09750', appKey:'LQF', appName:'Data Integration Service', cluster:'p2', clusterZone:'EKS', appType:'COTS', activeCluster:'SHARED1', town:'cyber', subdomain:'dev', demandNumber:'DMND9988776', glooMesh:'disabled', description:'New service onboarding request', requestor:'SVC_PLATFORM', primaryApprover:'n001234', secondaryApprover:'J056789', status:'Validation Failed', date:'Mar 15, 2026 05:01', reviewer:'' },
+    'SYSID-08827': { sysId:'SYSID-08827', appKey:'IMB', appName:'Security Platform', cluster:'p2', clusterZone:'EKS', appType:'COTS', activeCluster:'SHARED1', town:'cyber', subdomain:'dev', demandNumber:'DMND1234567', glooMesh:'disabled', description:'Town: cyber Owner: dl-dso-IMB-team Systems: SYSID-08827', requestor:'SVC_SERVICE', primaryApprover:'n002150', secondaryApprover:'J042773', status:'Pending Approval', date:'Mar 12, 2026 12:25', reviewer:'' },
+    'SYSID-09476': { sysId:'SYSID-09476', appKey:'YDX', appName:'Limit Processing', cluster:'p1', clusterZone:'AWS-Openshift', appType:'Internal', activeCluster:'SHARED2', town:'metro', subdomain:'qa', demandNumber:'DMND5544332', glooMesh:'enabled', description:'QA namespace for limit testing', requestor:'SUBRAMANIAN_K', primaryApprover:'n003456', secondaryApprover:'J078901', status:'Pending Approval', date:'Mar 10, 2026 09:28', reviewer:'' },
+    'SYSID-06759': { sysId:'SYSID-06759', appKey:'TTU', appName:'Pre-Clearance Service', cluster:'p2', clusterZone:'EKS', appType:'COTS', activeCluster:'SHARED1', town:'cyber', subdomain:'sit', demandNumber:'DMND3322110', glooMesh:'disabled', description:'SIT environment setup', requestor:'MOULI_R', primaryApprover:'n004567', secondaryApprover:'J089012', status:'Success', date:'Mar 3, 2026 08:17', reviewer:'Cindy A' },
+    'SYSID-09472': { sysId:'SYSID-09472', appKey:'OCY', appName:'OCY Platform', cluster:'p2', clusterZone:'EKS', appType:'Internal', activeCluster:'SHARED2', town:'uptown', subdomain:'dev', demandNumber:'DMND9876543', glooMesh:'disabled', description:'Dev platform setup', requestor:'YESWANTH_R', primaryApprover:'n008901', secondaryApprover:'J045678', status:'Rejected', date:'Feb 23, 2026 15:41', reviewer:'Cindy A', rejectionReason:'Invalid demand number provided' },
+  };
+
+  const STATUS_COLORS = {
+    'Pending Approval':  { bg:'#FFF9C4', color:'#F57F17' },
+    'Validation Failed': { bg:'#FFEBEE', color:'#B71C1C' },
+    'Success':           { bg:'#E8F5E9', color:'#2E7D32' },
+    'Failed':            { bg:'#EEEEEE', color:'#616161' },
+    'Rejected':          { bg:'#FFF3E0', color:'#E65100' },
+  };
+
+  function field(label, value) {
+    return `<div style="margin-bottom:16px"><div style="font-size:12px;color:#666;font-weight:600;margin-bottom:4px">${label}</div><div style="padding:8px 12px;border:1px solid #e8eaed;border-radius:6px;font-size:13px;background:#fafafa">${value || '—'}</div></div>`;
+  }
+
+  function openReviewDetail(sysId) {
+    const r = REVIEW_DATA[sysId]; if (!r) return;
+    const sc = STATUS_COLORS[r.status] || STATUS_COLORS['Failed'];
+    document.getElementById('modal-sysid').textContent = r.sysId;
+    document.getElementById('modal-date').textContent = 'Last update: ' + r.date;
+    document.getElementById('modal-status-chip').innerHTML = `<span style="background:${sc.bg};color:${sc.color};font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">${r.status}</span>`;
+
+    const adminBtns = (IS_PAAS_ADMIN && r.status === 'Pending Approval') ? `
+      <div style="display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid #e8eaed">
+        <button onclick="previewReject('${sysId}')" style="background:#fff;color:#c62828;border:1.5px solid #c62828;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer">Reject</button>
+        <button onclick="previewApprove('${sysId}')" style="background:#00965E;color:#fff;border:none;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer">Approve</button>
+        <button onclick="closeReviewModal()" style="margin-left:auto;background:none;border:1px solid #e8eaed;border-radius:6px;padding:8px 18px;font-size:13px;cursor:pointer;color:#555">Close</button>
+      </div>` : `<div style="display:flex;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid #e8eaed"><button onclick="closeReviewModal()" style="background:none;border:1px solid #e8eaed;border-radius:6px;padding:8px 18px;font-size:13px;cursor:pointer;color:#555">Close</button></div>`;
+
+    document.getElementById('modal-body').innerHTML = `
+      <div style="font-size:12px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Onboarding Request</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 16px">
+        ${field('SYS ID', r.sysId)}${field('App Key', r.appKey)}
+        ${field('App Name', r.appName)}${field('Cluster', r.cluster)}
+        ${field('PaaS Cluster Zone', r.clusterZone)}${field('App Type', r.appType)}
+        ${field('Active Cluster', r.activeCluster)}${field('Town', r.town)}
+        ${field('Sub Domain', r.subdomain)}${field('Demand Number', r.demandNumber)}
+        ${field('Gloo Mesh', r.glooMesh)}${field('Requestor', r.requestor)}
+      </div>
+      ${field('Description', r.description)}
+      <div style="font-size:12px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.05em;margin:16px 0 12px">AD Groups</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 16px">
+        ${field('Primary Approver', r.primaryApprover)}${field('Secondary Approver', r.secondaryApprover)}
+      </div>
+      ${r.rejectionReason ? `<div style="font-size:12px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.05em;margin:16px 0 8px">Rejection Reason</div>${field('', r.rejectionReason)}` : ''}
+      ${adminBtns}`;
+
+    const modal = document.getElementById('review-modal');
+    modal.style.display = 'flex';
+  }
+
+  function closeReviewModal() {
+    document.getElementById('review-modal').style.display = 'none';
+  }
+
+  function previewApprove(sysId) {
+    alert('✅ SYSID ' + sysId + ' approved.\n\n(In production: calls PUT /api/onboarding/' + sysId + '/status → Success)');
+    closeReviewModal();
+  }
+
+  function previewReject(sysId) {
+    const reason = prompt('Enter rejection reason:');
+    if (!reason) return;
+    alert('❌ SYSID ' + sysId + ' rejected.\nReason: ' + reason + '\n\n(In production: calls PUT /api/onboarding/' + sysId + '/status → Rejected)');
+    closeReviewModal();
   }
 
   // ── Notification banners ──────────────────────────────────────────────────
