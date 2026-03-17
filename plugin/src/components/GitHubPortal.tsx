@@ -92,7 +92,7 @@ const FUSE_ONBOARDING_WORKFLOW_URL =
   'https://app.harness.io/ng/account/YOUR_ACCOUNT_ID/module/idp/orgs/default/projects/platform_engineering/workflows/platform_a_onboarding';
 
 // ── Static service definitions ────────────────────────────────────────────────
-const TMS_SERVICES: Service[] = [
+const TEMS_SERVICES: Service[] = [
   {
     id: 'tms-reserve-env',
     title: 'Reserve Environment',
@@ -490,11 +490,11 @@ export function GitHubPortal() {
 
         <Divider className={classes.navDividerSpacing} />
 
-        {/* TMS */}
+        {/* TEMS */}
         <div className={classes.sectionHeader} onClick={() => toggleSection('tms')} role="button" aria-expanded={openSections.tms} tabIndex={0} onKeyDown={(e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSection('tms'); } }}>
           <div className={classes.sectionHeaderLeft}>
             <Icon className={classes.sectionIcon} aria-hidden="true">science</Icon>
-            <Typography className={classes.sectionLabel}>TMS</Typography>
+            <Typography className={classes.sectionLabel}>TEMS</Typography>
           </div>
           <Icon className={`${classes.chevron} ${openSections.tms ? classes.chevronOpen : ''}`} aria-hidden="true">expand_more</Icon>
         </div>
@@ -771,10 +771,10 @@ export function GitHubPortal() {
             </>
           )}
 
-          {/* ══ PAGE: TMS ══ */}
-          {TMS_SERVICES.map(svc => activePage === svc.id && (
+          {/* ══ PAGE: TEMS ══ */}
+          {TEMS_SERVICES.map(svc => activePage === svc.id && (
             <React.Fragment key={svc.id}>
-              <PageHeader icon="science" title="TMS" subtitle="Test Management Services — reserve environments, manage test data, and run performance tests." />
+              <PageHeader icon="science" title="TEMS" subtitle="Test Environment Management System — reserve environments, manage test data, and run performance tests." />
               <Grid container spacing={3}>
                 <Grid item xs={12} sm={6} md={4}><ServiceCard service={svc} /></Grid>
               </Grid>
