@@ -4,7 +4,8 @@
     "declaration": true,
     "declarationDir": "./dist-types",
     "rootDir": ".",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist", "dist-types"]
