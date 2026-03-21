@@ -1,1 +1,1 @@
-export { selfserviceGithubPlugin, SelfserviceGithubPage } from './plugin';
+export { selfserviceGithubPlugin, SelfService } from './plugin';

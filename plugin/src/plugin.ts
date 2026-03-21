@@ -16,9 +16,9 @@ export const selfserviceGithubPlugin = createPlugin({
   },
 });
 
-export const SelfserviceGithubPage = selfserviceGithubPlugin.provide(
+export const SelfService = selfserviceGithubPlugin.provide(
   createRoutableExtension({
-    name: 'SelfserviceGithubPage',
+    name: 'SelfService',
     component: () => Promise.resolve(GitHubPortal),
     mountPoint: rootRouteRef,
   }),
