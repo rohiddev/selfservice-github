@@ -23,7 +23,7 @@ import { ServiceCard, Service } from './ServiceCard';
 
 // ── Notification banners ──────────────────────────────────────────────────────
 const NOTIFICATIONS_API_ENABLED: boolean = false;
-const NOTIFICATIONS_API_PATH = '/api/proxy/platform-api/hoover-service/notifications-api/banners';
+const NOTIFICATIONS_API_PATH = '/api/proxy/platform-api/hoover-service/mock-api/notifications/banners';
 
 const FALLBACK_BANNERS = [
   { type: 'info',        icon: 'info',        message: 'GitHub Self-Service Portal is now live. Create repositories with Okta groups and GitHub Teams from a single form.' },
