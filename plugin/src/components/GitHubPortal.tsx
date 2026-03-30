@@ -84,12 +84,12 @@ const MOCK_REVIEW_REQUESTS: OnboardingRequest[] = [
 ];
 
 // ── Workflow URLs ─────────────────────────────────────────────────────────────
-// TODO: replace YOUR_ACCOUNT_ID after registering workflows in Harness IDP
+// TODO: replace N2EzMWI4YjQtNDU4OS00Zj after registering workflows in Harness IDP
 const CREATE_REPO_WORKFLOW_URL =
-  'https://app.harness.io/ng/account/YOUR_ACCOUNT_ID/module/idp/orgs/default/projects/platform_engineering/workflows/github_repo_okta_teams_provisioner';
+  'https://app.harness.io/ng/account/N2EzMWI4YjQtNDU4OS00Zj/module/idp/orgs/default/projects/platform_engineering/workflows/github_repo_okta_teams_provisioner';
 
 const FUSE_ONBOARDING_WORKFLOW_URL =
-  'https://app.harness.io/ng/account/YOUR_ACCOUNT_ID/module/idp/orgs/default/projects/platform_engineering/workflows/platform_a_onboarding';
+  'https://app.harness.io/ng/account/N2EzMWI4YjQtNDU4OS00Zj/module/idp/orgs/default/projects/platform_engineering/workflows/platform_a_onboarding';
 
 // ── Static service definitions ────────────────────────────────────────────────
 const TEMS_SERVICES: Service[] = [
