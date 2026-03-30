@@ -375,7 +375,7 @@ export function GitHubPortal() {
   // Load notification banners
   useEffect(() => {
     if (!NOTIFICATIONS_API_ENABLED) return;
-    fetch(NOTIFICATIONS_API_PATH)
+    fetchApi.fetch(NOTIFICATIONS_API_PATH)
       .then(r => r.json())
       .then(data => { if (Array.isArray(data) && data.length > 0) setBanners(data); })
       .catch(() => {});
