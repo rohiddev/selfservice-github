@@ -16,6 +16,7 @@ export function JarvisCloudPage() {
         description="Captures your application's infrastructure pattern fitment — cloud type, tier definitions, database configuration, AD group approvers, and governance details. Submits to Jarvis for cloud architect review and provisioning."
         status="available"
         workflowUrl={WORKFLOW_URLS.publicCloud}
+        videoUrl="" // SharePoint video URL
         tags={['aws', 'azure', 'jarvis', 'cloud', 'infrastructure']}
       />
     </PageSection>

@@ -16,6 +16,7 @@ export function HooverCreateRepoPage() {
         description="Creates a new GitHub repository under the organisation, provisions matching Okta Developer and Reviewer groups, and sets up corresponding GitHub Teams with correct permissions — all tied to your SYS ID."
         status="available"
         workflowUrl={WORKFLOW_URLS.createRepo}
+        videoUrl="" // SharePoint video URL
         tags={['github', 'okta', 'teams', 'provisioning']}
       />
     </PageSection>

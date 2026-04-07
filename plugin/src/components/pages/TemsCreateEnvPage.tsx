@@ -16,6 +16,7 @@ export function TemsCreateEnvPage() {
         description="Reserve a test environment for your application through the Test Environment Management System (TEMS). Specify your SYS ID, environment type, and duration. The environment is provisioned and access details are returned via the pipeline."
         status="available"
         workflowUrl={WORKFLOW_URLS.temsReserve}
+        videoUrl="" // SharePoint video URL
         tags={['tems', 'test', 'environment', 'qa']}
       />
     </PageSection>

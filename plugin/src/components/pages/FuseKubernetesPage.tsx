@@ -16,6 +16,7 @@ export function FuseKubernetesPage() {
         description="Provisions a Kubernetes namespace in the PaaS platform (EKS or OpenShift). Requires a valid SYS ID and ServiceNow demand number. Namespace type and cluster are determined by your SYS ID tier and the cluster zone you select."
         status="available"
         workflowUrl={WORKFLOW_URLS.k8sOnboarding}
+        videoUrl="" // SharePoint video URL
         tags={['kubernetes', 'eks', 'openshift', 'paas', 'namespace']}
       />
     </PageSection>

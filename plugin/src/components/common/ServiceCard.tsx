@@ -9,6 +9,7 @@ export interface ServiceCardProps {
   description: string;
   status: ServiceStatus;
   workflowUrl: string;
+  videoUrl?: string;
   tags?: string[];
 }
 
@@ -66,22 +67,35 @@ const useStyles = makeStyles(theme => ({
     lineHeight: 1.6,
     flexGrow: 1,
   },
-  footer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginTop: theme.spacing(1),
-  },
   tags: {
     display: 'flex',
     flexWrap: 'wrap' as const,
     gap: theme.spacing(0.5),
+    marginTop: theme.spacing(0.5),
   },
   tag: {
     fontSize: 11,
     height: 22,
     backgroundColor: '#f0f0f0',
     color: '#555',
+  },
+  actions: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: theme.spacing(1),
+    marginTop: theme.spacing(1),
+  },
+  videoBtn: {
+    border: '1.5px solid #C7D2FE',
+    color: '#1A1A2E',
+    textTransform: 'none' as const,
+    fontWeight: 600,
+    fontSize: 13,
+    borderRadius: 8,
+    padding: theme.spacing(0.75, 2),
+    backgroundColor: '#fff',
+    '&:hover': { backgroundColor: '#EEF2FF', borderColor: '#1A1A2E' },
+    '&:disabled': { borderColor: '#e0e0e0', color: '#bbb' },
   },
   launchBtn: {
     backgroundColor: '#1A1A2E',
@@ -91,19 +105,16 @@ const useStyles = makeStyles(theme => ({
     fontSize: 13,
     borderRadius: 8,
     padding: theme.spacing(0.75, 2.5),
+    marginLeft: 'auto',
     '&:hover': { backgroundColor: '#16213E' },
     '&:disabled': { backgroundColor: '#bdbdbd', color: '#fff' },
   },
 }));
 
-export function ServiceCard({ icon, title, description, status, workflowUrl, tags }: ServiceCardProps) {
+export function ServiceCard({ icon, title, description, status, workflowUrl, videoUrl, tags }: ServiceCardProps) {
   const classes = useStyles();
   const statusCfg = STATUS_CONFIG[status];
   const isDisabled = status === 'coming-soon';
-
-  const handleLaunch = () => {
-    if (!isDisabled) window.location.href = workflowUrl;
-  };
 
   return (
     <div className={classes.card}>
@@ -121,16 +132,26 @@ export function ServiceCard({ icon, title, description, status, workflowUrl, tag
       <Typography className={classes.title}>{title}</Typography>
       <Typography className={classes.description}>{description}</Typography>
 
-      <div className={classes.footer}>
-        <div className={classes.tags}>
-          {tags?.map(t => (
-            <Chip key={t} label={t} size="small" className={classes.tag} />
-          ))}
-        </div>
+      <div className={classes.tags}>
+        {tags?.map(t => (
+          <Chip key={t} label={t} size="small" className={classes.tag} />
+        ))}
+      </div>
+
+      <div className={classes.actions}>
+        <Button
+          className={classes.videoBtn}
+          disabled={!videoUrl}
+          onClick={() => videoUrl && window.open(videoUrl, '_blank', 'noopener,noreferrer')}
+          startIcon={<Icon style={{ fontSize: 16 }}>play_circle</Icon>}
+          aria-label={`Watch video for ${title}`}
+        >
+          Watch Video
+        </Button>
         <Button
           className={classes.launchBtn}
-          onClick={handleLaunch}
           disabled={isDisabled}
+          onClick={() => !isDisabled && window.open(workflowUrl, '_blank', 'noopener,noreferrer')}
           endIcon={<Icon style={{ fontSize: 16 }}>arrow_forward</Icon>}
           aria-label={`Launch ${title} workflow`}
         >

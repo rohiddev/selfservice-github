@@ -15,6 +15,7 @@ export function HooverCreateAdGroupPage() {
         description="Provisions a new Active Directory group scoped to your SYS ID. The group is created with the correct naming convention and ownership, ready for user assignment."
         status="coming-soon"
         workflowUrl=""
+        videoUrl="" // SharePoint video URL
         tags={['active-directory', 'iam', 'provisioning']}
       />
     </PageSection>

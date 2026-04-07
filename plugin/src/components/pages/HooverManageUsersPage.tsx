@@ -24,6 +24,7 @@ export function HooverManageUsersPage() {
           description="Remove one or more users from an existing Active Directory group. Access is revoked immediately after the pipeline completes."
           status="coming-soon"
           workflowUrl=""
+          videoUrl="" // SharePoint video URL
           tags={['active-directory', 'user-management', 'iam']}
         />
       </div>
