@@ -1,933 +1,682 @@
 <!DOCTYPE html>
 <!--
-  GitHub Self-Service Portal — Harness IDP 2.0
+  Developer Self-Service Portal — Harness IDP 2.0
   Local preview — open directly in Chrome, no server needed.
-
-  GitHub: https://github.com/rohiddev/selfservice-github
   Author: Rohid Dev · github.com/rohiddev
 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>GitHub Self-Service Portal — Preview</title>
+<title>Developer Self-Service Portal — Preview</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Inter', sans-serif; background: #ffffff; display: flex; min-height: 100vh; }
+  body { font-family: 'Inter', sans-serif; background: #f8f9fa; display: flex; flex-direction: column; min-height: 100vh; }
 
-  /* ── Left Nav ───────────────────────────────────────────────────────── */
-  .nav {
-    width: 240px; flex-shrink: 0; background: #00965E; color: #fff;
-    display: flex; flex-direction: column;
-    position: sticky; top: 0; height: 100vh; overflow-y: auto;
-  }
-  .nav-logo {
-    display: flex; align-items: center; gap: 12px;
-    padding: 20px 20px 16px;
-  }
-  .nav-logo-icon {
-    width: 36px; height: 36px; background: #007A4D; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .nav-logo-icon .material-icons { font-size: 20px; color: #fff; }
-  .nav-logo-title { font-weight: 800; font-size: 14px; line-height: 1.2; color: #fff; }
-  .nav-logo-sub { font-size: 11px; color: rgba(255,255,255,0.85); margin-top: 1px; }
-  .nav-divider { border: none; border-top: 1px solid rgba(255,255,255,0.2); margin: 10px 16px 4px; }
-
-  .nav-section-header {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 8px 12px 6px 16px;
-    cursor: pointer; user-select: none;
-  }
-  .nav-section-header:hover { background: rgba(0,0,0,0.08); }
-  .nav-section-left { display: flex; align-items: center; gap: 8px; }
-  .nav-section-icon { font-size: 17px !important; color: #fff; }
-  .nav-section-label {
-    font-size: 11px; font-weight: 700; color: #fff;
-    text-transform: uppercase; letter-spacing: 0.06em;
-  }
-  .nav-chevron {
-    font-size: 16px !important; color: rgba(255,255,255,0.8);
-    transition: transform 0.2s; margin-right: 4px;
-  }
-  .nav-chevron.open { transform: rotate(180deg); }
-
-  .nav-section-body {
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.25s ease;
-  }
-  .nav-section-body.open { max-height: 200px; }
-
-  .nav-child {
+  /* ── Top Nav ─────────────────────────────────────────────────────────── */
+  .top-nav {
     display: flex; align-items: center;
-    margin: 2px 8px 2px 24px; padding: 7px 12px; border-radius: 8px;
-    cursor: pointer; font-size: 13px; color: #fff; font-weight: 600;
-    background: rgba(0,122,77,0.35);
-    border-left: 3px solid #80CBA8; padding-left: 9px;
-    transition: background 0.15s;
+    background: #1A1A2E;
+    padding: 0 16px;
+    gap: 16px;
+    min-height: 52px;
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+    flex-shrink: 0;
   }
-  .nav-child:hover { background: rgba(0,122,77,0.5); }
-  .nav-child.active { background: rgba(255,255,255,0.2); border-left-color: #fff; }
+  .brand {
+    display: flex; align-items: center; gap: 8px;
+    flex-shrink: 0; cursor: pointer;
+    padding: 6px 8px; border-radius: 6px;
+    text-decoration: none;
+  }
+  .brand:hover { background: rgba(255,255,255,0.08); }
+  .brand .material-icons { color: #fff; font-size: 22px; }
+  .brand-text { color: #fff; font-weight: 800; font-size: 15px; white-space: nowrap; }
 
-  .nav-footer {
-    margin-top: auto; padding: 16px;
-    border-top: 1px solid rgba(255,255,255,0.15);
-    font-size: 11px; color: rgba(255,255,255,0.7); text-align: center;
+  .primary-tabs {
+    display: flex; align-items: stretch;
+    flex: 1; gap: 0;
+    overflow-x: auto;
+  }
+  .primary-tabs::-webkit-scrollbar { display: none; }
+  .primary-tab {
+    padding: 0 16px; height: 52px;
+    display: flex; align-items: center;
+    font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,0.65);
+    cursor: pointer; border: none; background: none;
+    font-family: inherit; white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .primary-tab:hover { color: rgba(255,255,255,0.9); }
+  .primary-tab.active { color: #fff; border-bottom-color: #fff; }
+
+  /* ── Bell ───────────────────────────────────────────────────────────── */
+  .bell-btn {
+    position: relative; background: none; border: none; cursor: pointer;
+    color: rgba(255,255,255,0.8); padding: 6px; border-radius: 6px;
+    display: flex; align-items: center; flex-shrink: 0;
+    transition: background 0.15s, color 0.15s;
+  }
+  .bell-btn:hover { background: rgba(255,255,255,0.1); color: #fff; }
+  .bell-badge {
+    position: absolute; top: 2px; right: 2px;
+    background: #E53935; color: #fff;
+    font-size: 9px; font-weight: 700; font-family: inherit;
+    min-width: 16px; height: 16px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 4px; pointer-events: none;
+  }
+  .bell-badge.hidden { display: none; }
+  .bell-btn .material-icons { font-size: 22px; }
+
+  /* ── Notification panel ──────────────────────────────────────────────── */
+  .notif-panel {
+    display: none; position: absolute;
+    top: 58px; right: 72px;
+    width: 360px; background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    z-index: 200; overflow: hidden;
+  }
+  .notif-panel.open { display: block; }
+  .notif-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 16px 12px;
+  }
+  .notif-title { font-weight: 700; font-size: 15px; color: #1a1a1a; }
+  .notif-mark-read {
+    font-size: 12px; font-weight: 600; color: #1A1A2E;
+    cursor: pointer; background: none; border: none;
+    font-family: inherit; padding: 0;
+  }
+  .notif-mark-read:hover { text-decoration: underline; }
+  .notif-divider { border: none; border-top: 1px solid #f0f0f0; margin: 0; }
+  .notif-item {
+    display: flex; gap: 12px; padding: 14px 16px;
+    cursor: pointer; transition: background 0.12s;
+  }
+  .notif-item:hover { background: #f5f5f5; }
+  .notif-item.unread { background: #F5F5FF; }
+  .notif-item.unread:hover { background: #EDEDFD; }
+  .notif-item-icon { flex-shrink: 0; margin-top: 2px; }
+  .notif-item-body { flex: 1; min-width: 0; }
+  .notif-item-title { font-weight: 700; font-size: 13px; color: #1a1a1a; margin-bottom: 2px; }
+  .notif-item-text { font-size: 12px; color: #666; line-height: 1.5; }
+  .notif-item-time { font-size: 11px; color: #aaa; margin-top: 4px; }
+  .notif-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #1A1A2E; flex-shrink: 0; margin-top: 6px;
   }
 
-  /* ── Topbar ─────────────────────────────────────────────────────────── */
-  .topbar {
-    display: flex; justify-content: flex-end;
-    align-items: center; margin-bottom: 24px;
-  }
   .user-chip {
     display: flex; align-items: center; gap: 8px;
-    background: #fff; border: 1.5px solid #e8eaed; border-radius: 24px;
-    padding: 5px 12px 5px 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    background: rgba(255,255,255,0.12);
+    border-radius: 20px; padding: 4px 12px 4px 6px;
+    flex-shrink: 0;
   }
   .avatar {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: #00965E; display: flex; align-items: center;
-    justify-content: center; font-size: 11px; font-weight: 700; color: #fff;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: #fff;
   }
-  .user-name { font-size: 13px; color: #1a1a1a; font-weight: 600; }
+  .user-name { font-size: 13px; color: #fff; font-weight: 600; white-space: nowrap; }
 
-  /* ── Main Content ───────────────────────────────────────────────────── */
-  .content { flex: 1; overflow-y: auto; }
-  .page-inner { padding: 32px; }
+  /* ── Sub-tabs ────────────────────────────────────────────────────────── */
+  .sub-nav {
+    background: #fff;
+    border-bottom: 2px solid #C7D2FE;
+    padding: 0 24px;
+    display: none;
+    flex-shrink: 0;
+  }
+  .sub-nav.visible { display: flex; }
+  .sub-tab {
+    padding: 12px 16px;
+    font-size: 13px; font-weight: 500;
+    color: #555; cursor: pointer;
+    border: none; background: none;
+    font-family: inherit; white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.15s;
+  }
+  .sub-tab:hover { color: #1a1a1a; }
+  .sub-tab.active { color: #1A1A2E; font-weight: 700; border-bottom-color: #1A1A2E; }
 
-  /* ── Page Header ────────────────────────────────────────────────────── */
+  /* ── Page content ────────────────────────────────────────────────────── */
+  .content { flex: 1; padding: 32px; }
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ── Page section header ─────────────────────────────────────────────── */
   .page-header { margin-bottom: 24px; }
   .page-header-row { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
   .page-header-icon {
     width: 40px; height: 40px; border-radius: 10px;
-    background: #E6F5EF; display: flex; align-items: center; justify-content: center;
+    background: #EEF2FF; display: flex; align-items: center; justify-content: center;
   }
-  .page-header-icon .material-icons { color: #00965E; font-size: 22px; }
-  .page-header-title { font-size: 22px; font-weight: 700; color: #007A4D; }
+  .page-header-icon .material-icons { color: #1A1A2E; font-size: 22px; }
+  .page-header-title { font-size: 22px; font-weight: 700; color: #16213E; }
   .page-header-subtitle { font-size: 14px; color: #666; margin-bottom: 16px; }
-  .page-header-divider { border: none; border-top: 1px solid #e8eaed; }
+  .page-divider { border: none; border-top: 1px solid #e8eaed; }
 
   /* ── Service Cards ──────────────────────────────────────────────────── */
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
+    gap: 20px; margin-top: 20px;
   }
   .card {
     border-radius: 12px; border: 1px solid #e8eaed;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     display: flex; flex-direction: column;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    background: #fff;
+    transition: transform 0.15s, box-shadow 0.15s;
   }
-  .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
-  .card-content { padding: 20px 20px 12px; flex: 1; }
-  .card-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.1); }
+  .card.coming-soon { opacity: 0.7; }
+  .card-body { padding: 20px 20px 12px; flex: 1; }
+  .card-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 12px; }
   .card-icon {
     width: 48px; height: 48px; border-radius: 10px;
-    background: #E6F5EF; display: flex; align-items: center; justify-content: center;
+    background: #EEF2FF; display: flex; align-items: center; justify-content: center;
   }
-  .card-icon .material-icons { color: #00965E; font-size: 26px; }
-  .status-chip {
-    font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 12px;
-  }
-  .status-available { background: #e8f5e9; color: #2e7d32; }
+  .card-icon .material-icons { color: #1A1A2E; font-size: 26px; }
+  .status-chip { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 12px; }
+  .status-available { background: #E8EAF6; color: #3730A3; }
+  .status-coming-soon { background: #f5f5f5; color: #888; }
   .card-title { font-size: 15px; font-weight: 700; color: #1a1a1a; margin-bottom: 6px; }
-  .card-desc { font-size: 13px; color: #666; line-height: 1.5; }
+  .card-desc { font-size: 13px; color: #666; line-height: 1.55; }
   .card-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 12px; }
-  .tag {
-    font-size: 11px; padding: 2px 8px; border-radius: 10px;
-    background: #f5f5f5; color: #555;
-  }
+  .tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #f5f5f5; color: #555; }
   .card-actions { padding: 12px 20px 20px; }
-  .btn-primary {
-    display: inline-block; width: 100%;
-    background: #00965E; color: #fff;
+  .btn-launch {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    width: 100%; background: #1A1A2E; color: #fff;
     font-size: 13px; font-weight: 600; border: none;
     padding: 9px 16px; border-radius: 8px; cursor: pointer;
-    text-align: center; text-decoration: none;
+    text-align: center; text-decoration: none; font-family: inherit;
     transition: background 0.15s;
   }
-  .btn-primary:hover { background: #007A4D; }
+  .btn-launch:hover { background: #0F3460; }
+  .btn-launch.disabled {
+    background: #e0e0e0; color: #aaa; cursor: not-allowed;
+    pointer-events: none;
+  }
+  .btn-launch .material-icons { font-size: 16px; }
 
-  /* ── Hero Banner ────────────────────────────────────────────────────── */
+  /* ── Home hero ───────────────────────────────────────────────────────── */
   .hero {
-    background: linear-gradient(135deg, #00965E 0%, #007A4D 100%);
-    border-radius: 16px;
-    padding: 32px 40px;
-    margin-bottom: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+    border-radius: 16px; padding: 32px 40px; margin-bottom: 32px;
     color: #fff;
   }
-  .hero-greeting { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 500; margin-bottom: 6px; }
-  .hero-title { font-size: 26px; font-weight: 800; color: #fff; line-height: 1.2; margin-bottom: 8px; }
-  .hero-subtitle { font-size: 14px; color: rgba(255,255,255,0.85); max-width: 480px; line-height: 1.6; }
-  .hero-icon-box {
-    width: 80px; height: 80px; border-radius: 20px;
-    background: rgba(255,255,255,0.15);
-    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-  }
-  .hero-icon-box .material-icons { font-size: 44px; color: #fff; }
+  .hero-title { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
+  .hero-sub { font-size: 14px; color: rgba(255,255,255,0.85); max-width: 520px; line-height: 1.6; }
 
-  /* ── Notification Banner ─────────────────────────────────────────────── */
-  .banner {
-    display: flex; align-items: center; gap: 10px;
-    padding: 8px 24px; font-size: 12.5px;
-  }
-  .banner-msg { flex: 1; font-size: 13px; font-weight: 500; }
-  .banner-nav {
-    background: none; border: none; cursor: pointer;
-    padding: 2px; display: flex; align-items: center; opacity: 0.6;
-  }
-  .banner-nav:hover { opacity: 1; }
-  .banner-count { font-size: 11px; opacity: 0.7; }
-
-  /* ── Video Cards ─────────────────────────────────────────────────────── */
-  .video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 20px;
-    margin-top: 24px;
-  }
-  .video-card {
-    border: 1px solid #e8eaed; border-radius: 12px; overflow: hidden;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-  .video-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-  .video-thumb {
-    background: #E6F5EF; height: 120px;
-    display: flex; align-items: center; justify-content: center;
-    position: relative;
-  }
-  .video-thumb .material-icons { color: #00965E; font-size: 48px; }
-  .video-duration {
-    position: absolute; bottom: 8px; right: 10px;
-    font-size: 11px; font-weight: 700;
-    background: rgba(0,0,0,0.55); color: #fff;
-    padding: 2px 6px; border-radius: 4px;
-  }
-  .video-body { padding: 16px; }
-  .video-title { font-weight: 700; font-size: 14px; color: #1a1a1a; margin-bottom: 6px; }
-  .video-desc { font-size: 12px; color: #666; line-height: 1.5; margin-bottom: 12px; }
-  .video-watch {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 12px; font-weight: 600; color: #00965E; text-decoration: none;
-  }
-  .video-watch:hover { text-decoration: underline; }
-  .video-watch .material-icons { font-size: 14px; }
-
-  /* ── Contact Cards ───────────────────────────────────────────────────── */
-  .contact-grid {
+  .section-title { font-weight: 700; font-size: 16px; color: #1a1a1a; margin-bottom: 12px; }
+  .quick-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 20px;
-    margin-top: 24px;
+    gap: 12px;
   }
-  .contact-card {
-    border: 1px solid #e8eaed; border-radius: 12px;
-    padding: 24px; display: flex; flex-direction: column; gap: 8px;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-    transition: transform 0.15s, box-shadow 0.15s;
+  .quick-card {
+    background: #fff; border: 1.5px solid #e8eaed; border-radius: 12px;
+    padding: 16px; display: flex; align-items: center; gap: 14px;
+    cursor: pointer; transition: box-shadow 0.15s, border-color 0.15s;
   }
-  .contact-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-  .contact-icon { color: #00965E; font-size: 28px !important; }
-  .contact-label { font-weight: 700; font-size: 15px; color: #1a1a1a; }
-  .contact-value { font-size: 13px; color: #555; }
-  .contact-link {
-    margin-top: auto; display: inline-block;
-    font-size: 13px; font-weight: 600; color: #00965E; text-decoration: none;
+  .quick-card:hover { box-shadow: 0 4px 16px rgba(26,26,46,0.1); border-color: #C7D2FE; }
+  .quick-card.inactive { opacity: 0.5; cursor: default; }
+  .quick-card.inactive:hover { box-shadow: none; border-color: #e8eaed; }
+  .quick-icon {
+    width: 40px; height: 40px; border-radius: 8px;
+    background: #EEF2FF; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
   }
-  .contact-link:hover { text-decoration: underline; }
-
-  /* ── Request a Feature ───────────────────────────────────────────────── */
-  .feature-form {
-    max-width: 560px; margin-top: 24px;
-    display: flex; flex-direction: column; gap: 20px;
-  }
-  .form-label { font-weight: 600; font-size: 13px; color: #1a1a1a; margin-bottom: 6px; display: block; }
-  .form-input, .form-textarea {
-    width: 100%; padding: 10px 12px;
-    border: 1.5px solid #e8eaed; border-radius: 8px;
-    font-size: 13px; font-family: inherit; outline: none;
-  }
-  .form-input:focus, .form-textarea:focus { border-color: #00965E; }
-  .form-textarea { resize: vertical; min-height: 100px; }
-  .submit-btn {
-    align-self: flex-start;
-    background: #00965E; color: #fff;
-    border: none; border-radius: 8px;
-    padding: 10px 24px; font-size: 13px; font-weight: 600; cursor: pointer;
-  }
-  .submit-btn:hover { background: #007A4D; }
-  .success-box {
-    display: flex; align-items: center; gap: 12px;
-    background: #E6F5EF; border: 1px solid #b2dfdb;
-    border-radius: 10px; padding: 16px; margin-top: 16px;
-  }
-  .success-box .material-icons { color: #00965E; font-size: 28px; }
-  .success-title { font-weight: 700; color: #007A4D; font-size: 15px; }
-  .success-sub { font-size: 13px; color: #555; }
-
-  /* ── Hidden page sections ────────────────────────────────────────────── */
-  .page { display: none; }
-  .page.active { display: block; }
-
+  .quick-icon .material-icons { color: #1A1A2E; font-size: 22px; }
+  .quick-title { font-weight: 700; font-size: 14px; color: #1a1a1a; }
+  .quick-desc { font-size: 12px; color: #777; margin-top: 2px; }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════════════════
-     LEFT NAVIGATION
-══════════════════════════════════════════════════════ -->
-<nav class="nav">
-  <!-- Logo -->
-  <div class="nav-logo">
-    <div class="nav-logo-icon">
-      <span class="material-icons">developer_board</span>
-    </div>
-    <div>
-      <div class="nav-logo-title">Developer Portal</div>
-      <div class="nav-logo-sub">Hoover Services</div>
-    </div>
+<!-- ══ TOP NAV ══════════════════════════════════════════════════════════ -->
+<nav class="top-nav">
+  <a class="brand" onclick="showSection('home')" href="#">
+    <span class="material-icons">developer_board</span>
+    <span class="brand-text">Developer Portal</span>
+  </a>
+
+  <div class="primary-tabs">
+    <button class="primary-tab active" id="tab-home"   onclick="showSection('home')">Home</button>
+    <button class="primary-tab"        id="tab-hoover" onclick="showSection('hoover')">Hoover</button>
+    <button class="primary-tab"        id="tab-fuse"   onclick="showSection('fuse')">Fuse</button>
+    <button class="primary-tab"        id="tab-jarvis" onclick="showSection('jarvis')">Jarvis</button>
+    <button class="primary-tab"        id="tab-tems"   onclick="showSection('tems')">TEMS</button>
   </div>
 
-  <hr class="nav-divider">
+  <!-- Bell -->
+  <button class="bell-btn" onclick="toggleNotifications()" aria-label="Notifications">
+    <span class="material-icons">notifications</span>
+    <span class="bell-badge" id="bell-badge">3</span>
+  </button>
 
-  <!-- Hoover Services -->
-  <div class="nav-section-header" onclick="toggleSection('github')" aria-expanded="true">
-    <div class="nav-section-left">
-      <span class="material-icons nav-section-icon">code</span>
-      <span class="nav-section-label">Hoover Services</span>
-    </div>
-    <span class="material-icons nav-chevron open" id="chevron-github">expand_more</span>
+  <div class="user-chip">
+    <div class="avatar">RD</div>
+    <span class="user-name">Rohid Dev</span>
   </div>
-  <div class="nav-section-body open" id="body-github">
-    <div class="nav-child active" onclick="showPage('github', this)">Create Repository</div>
-  </div>
-
-  <hr class="nav-divider">
-
-  <!-- Fuse Services -->
-  <div class="nav-section-header" onclick="toggleSection('fuse')" aria-expanded="false">
-    <div class="nav-section-left">
-      <span class="material-icons nav-section-icon">dns</span>
-      <span class="nav-section-label">Fuse Services</span>
-    </div>
-    <span class="material-icons nav-chevron" id="chevron-fuse">expand_more</span>
-  </div>
-  <div class="nav-section-body" id="body-fuse">
-    <div class="nav-child" onclick="showPage('fuse-onboarding-request', this)">Onboarding-Request</div>
-    <div class="nav-child" onclick="showPage('fuse-onboarding-review', this)">Onboarding-Review</div>
-  </div>
-
-  <hr class="nav-divider">
-
-  <!-- TEMS -->
-  <div class="nav-section-header" onclick="toggleSection('tms')" aria-expanded="false">
-    <div class="nav-section-left">
-      <span class="material-icons nav-section-icon">science</span>
-      <span class="nav-section-label">TEMS</span>
-    </div>
-    <span class="material-icons nav-chevron" id="chevron-tms">expand_more</span>
-  </div>
-  <div class="nav-section-body" id="body-tms">
-    <div class="nav-child" onclick="showPage('tms-reserve-env', this)">Reserve Environment</div>
-  </div>
-
-  <hr class="nav-divider">
-
-  <!-- Resources -->
-  <div class="nav-section-header" onclick="toggleSection('resources')" aria-expanded="false">
-    <div class="nav-section-left">
-      <span class="material-icons nav-section-icon">ondemand_video</span>
-      <span class="nav-section-label">Resources</span>
-    </div>
-    <span class="material-icons nav-chevron" id="chevron-resources">expand_more</span>
-  </div>
-  <div class="nav-section-body" id="body-resources">
-    <div class="nav-child" onclick="showPage('videos', this)">Video Guides</div>
-  </div>
-
-  <hr class="nav-divider">
-
-  <!-- Help & Feedback -->
-  <div class="nav-section-header" onclick="toggleSection('help')" aria-expanded="false">
-    <div class="nav-section-left">
-      <span class="material-icons nav-section-icon">help_outline</span>
-      <span class="nav-section-label">Help &amp; Feedback</span>
-    </div>
-    <span class="material-icons nav-chevron" id="chevron-help">expand_more</span>
-  </div>
-  <div class="nav-section-body" id="body-help">
-    <div class="nav-child" onclick="showPage('contact', this)">Contact Us</div>
-    <div class="nav-child" onclick="showPage('request-feature', this)">Request a Feature</div>
-  </div>
-
-  <!-- Footer -->
-  <div class="nav-footer">Platform Engineering · Rohid Dev</div>
 </nav>
 
-<!-- ══════════════════════════════════════════════════════
-     MAIN CONTENT
-══════════════════════════════════════════════════════ -->
+<!-- Notification panel (outside nav so it overlays content) -->
+<div class="notif-panel" id="notif-panel">
+  <div class="notif-header">
+    <span class="notif-title">Notifications</span>
+    <button class="notif-mark-read" onclick="markAllRead()">Mark all as read</button>
+  </div>
+  <hr class="notif-divider">
+
+  <div class="notif-item unread" id="notif-1" onclick="readNotif('notif-1')">
+    <div class="notif-item-icon"><span class="material-icons" style="color:#3730A3;font-size:20px">check_circle</span></div>
+    <div class="notif-item-body">
+      <div class="notif-item-title">Portal is live</div>
+      <div class="notif-item-text">Developer Self-Service Portal is now available. Create repositories with Okta groups and GitHub Teams from a single form.</div>
+      <div class="notif-item-time">Today</div>
+    </div>
+    <div class="notif-dot" id="dot-notif-1"></div>
+  </div>
+  <hr class="notif-divider">
+
+  <div class="notif-item unread" id="notif-2" onclick="readNotif('notif-2')">
+    <div class="notif-item-icon"><span class="material-icons" style="color:#0369A1;font-size:20px">info</span></div>
+    <div class="notif-item-body">
+      <div class="notif-item-title">Public Cloud Onboarding updated</div>
+      <div class="notif-item-text">The Jarvis workflow now supports additional cloud regions. Review your infrastructure pattern fitment.</div>
+      <div class="notif-item-time">Yesterday</div>
+    </div>
+    <div class="notif-dot" id="dot-notif-2"></div>
+  </div>
+  <hr class="notif-divider">
+
+  <div class="notif-item unread" id="notif-3" onclick="readNotif('notif-3')">
+    <div class="notif-item-icon"><span class="material-icons" style="color:#B45309;font-size:20px">schedule</span></div>
+    <div class="notif-item-body">
+      <div class="notif-item-title">Create AD Group - coming soon</div>
+      <div class="notif-item-text">Active Directory group provisioning is under development and will be available shortly.</div>
+      <div class="notif-item-time">3 days ago</div>
+    </div>
+    <div class="notif-dot" id="dot-notif-3"></div>
+  </div>
+</div>
+
+<!-- ══ SUB-TABS (Hoover only) ══════════════════════════════════ -->
+<div class="sub-nav" id="sub-nav-hoover">
+  <button class="sub-tab active" id="subtab-create-repo"    onclick="showPage('create-repo')">Create Repository</button>
+  <button class="sub-tab"        id="subtab-create-adgroup" onclick="showPage('create-adgroup')">Create AD Group</button>
+  <button class="sub-tab"        id="subtab-manage-users"   onclick="showPage('manage-users')">Manage Users in AD Group</button>
+</div>
+
+<!-- ══ CONTENT ══════════════════════════════════════════════════════════ -->
 <main class="content">
 
-  <!-- Notification banner — full width, above page content -->
-  <div class="banner" id="banner" style="background:#E6F5EF">
-    <span class="material-icons" style="color:#007A4D;font-size:16px" id="banner-icon">new_releases</span>
-    <span class="banner-msg" style="color:#007A4D" id="banner-msg">GitHub Self-Service Portal is now live. Create repositories with Okta groups and GitHub Teams from a single form.</span>
-    <button class="banner-nav" style="color:#007A4D" onclick="prevBanner()" aria-label="Previous"><span class="material-icons" style="font-size:16px">chevron_left</span></button>
-    <span class="banner-count" style="color:#007A4D" id="banner-count">1/3</span>
-    <button class="banner-nav" style="color:#007A4D" onclick="nextBanner()" aria-label="Next"><span class="material-icons" style="font-size:16px">chevron_right</span></button>
-    <button class="banner-nav" style="color:#007A4D" onclick="document.getElementById('banner').style.display='none'" aria-label="Dismiss"><span class="material-icons" style="font-size:16px">close</span></button>
+  <!-- HOME ──────────────────────────────────────────────────────────── -->
+  <div class="page active" id="page-home">
+    <div class="hero">
+      <div class="hero-title">Developer Self-Service Portal</div>
+      <div class="hero-sub">Provision infrastructure, manage access, and automate platform tasks — all from one place. No tickets. No waiting.</div>
+    </div>
+    <div class="section-title">Quick Access</div>
+    <div class="quick-grid">
+      <div class="quick-card" onclick="showSection('hoover'); showPage('create-repo')">
+        <div class="quick-icon"><span class="material-icons">folder</span></div>
+        <div><div class="quick-title">Create Repository</div><div class="quick-desc">Provision a new GitHub repo</div></div>
+      </div>
+      <div class="quick-card inactive">
+        <div class="quick-icon"><span class="material-icons">group_add</span></div>
+        <div><div class="quick-title">Create AD Group</div><div class="quick-desc">Create a new Active Directory group</div></div>
+      </div>
+      <div class="quick-card inactive">
+        <div class="quick-icon"><span class="material-icons">manage_accounts</span></div>
+        <div><div class="quick-title">Manage AD Group Users</div><div class="quick-desc">Add or remove group members</div></div>
+      </div>
+      <div class="quick-card" onclick="showSection('fuse')">
+        <div class="quick-icon"><span class="material-icons">dns</span></div>
+        <div><div class="quick-title">Kubernetes Onboarding</div><div class="quick-desc">Provision a PaaS namespace</div></div>
+      </div>
+      <div class="quick-card" onclick="showSection('jarvis')">
+        <div class="quick-icon"><span class="material-icons">cloud</span></div>
+        <div><div class="quick-title">Public Cloud Onboarding</div><div class="quick-desc">Jarvis infrastructure provisioning</div></div>
+      </div>
+      <div class="quick-card" onclick="showSection('tems')">
+        <div class="quick-icon"><span class="material-icons">science</span></div>
+        <div><div class="quick-title">Create Test Environment</div><div class="quick-desc">Reserve a TEMS test environment</div></div>
+      </div>
+    </div>
   </div>
 
-  <div class="page-inner">
-
-    <!-- User identity chip -->
-    <div class="topbar">
-      <div class="user-chip">
-        <div class="avatar">RD</div>
-        <span class="user-name">Rohid Dev</span>
+  <!-- HOOVER — CREATE REPOSITORY ────────────────────────────────────── -->
+  <div class="page" id="page-create-repo">
+    <div class="page-header">
+      <div class="page-header-row">
+        <div class="page-header-icon"><span class="material-icons">folder</span></div>
+        <div class="page-header-title">Create Repository</div>
       </div>
+      <div class="page-header-subtitle">Provision a new GitHub repository with Okta groups and GitHub Teams pre-configured.</div>
+      <hr class="page-divider">
     </div>
-
-    <!-- ══ PAGE: Hoover Services (home) ══ -->
-    <div id="page-github" class="page active">
-      <div class="hero">
-        <div>
-          <div class="hero-greeting">Welcome back, Rohid</div>
-          <div class="hero-title">Developer Self-Service Portal</div>
-          <div class="hero-subtitle">Provision GitHub repositories, manage teams, and automate platform tasks — all from one place. No tickets, no waiting.</div>
-        </div>
-        <div class="hero-icon-box">
-          <span class="material-icons">developer_board</span>
-        </div>
-      </div>
-
-      <div class="page-header">
-        <div class="page-header-row">
-          <div class="page-header-icon"><span class="material-icons">code</span></div>
-          <div class="page-header-title">Hoover Services</div>
-        </div>
-        <div class="page-header-subtitle">Provision and manage GitHub repositories with Okta groups and GitHub Teams — built-in approval workflows included.</div>
-        <hr class="page-header-divider">
-      </div>
-
-      <div class="cards-grid">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-header">
-              <div class="card-icon"><span class="material-icons">create_new_folder</span></div>
-              <span class="status-chip status-available">Available</span>
-            </div>
-            <div class="card-title">Create Repository</div>
-            <div class="card-desc">Provision a new GitHub repository with Okta Developer and Admin groups, matching GitHub Teams, and correct permissions — all from a single form.</div>
-            <div class="card-tags">
-              <span class="tag">github</span>
-              <span class="tag">okta</span>
-              <span class="tag">teams</span>
-            </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-icon"><span class="material-icons">folder_open</span></div>
+            <span class="status-chip status-available">Available</span>
           </div>
-          <div class="card-actions">
-            <a class="btn-primary" href="../harnessidp-createrepo/preview.html" target="_blank">Create Repository</a>
+          <div class="card-title">Provision GitHub Repository</div>
+          <div class="card-desc">Create a new GitHub repository with the correct naming convention, branch protections, and team permissions. Okta Developer and Reviewer groups are automatically created and linked.</div>
+          <div class="card-tags">
+            <span class="tag">github</span>
+            <span class="tag">okta</span>
+            <span class="tag">teams</span>
           </div>
+        </div>
+        <div class="card-actions">
+          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQ1NDU4OS0Zj/module/idp/entities/view/account/workflow2_github_repo_git_ops" target="_blank">
+            <span class="material-icons">open_in_new</span> Launch Workflow
+          </a>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- ══ PAGE: Fuse Services — Review ══ -->
-    <div id="page-fuse-onboarding-review" class="page">
-      <div class="page-header">
-        <div class="page-header-row">
-          <div class="page-header-icon"><span class="material-icons">fact_check</span></div>
-          <div class="page-header-title">Onboarding Requests</div>
-        </div>
-        <div class="page-header-subtitle" id="review-subtitle">View all namespace onboarding requests.</div>
-        <hr class="page-header-divider">
+  <!-- HOOVER — CREATE AD GROUP ───────────────────────────────────────── -->
+  <div class="page" id="page-create-adgroup">
+    <div class="page-header">
+      <div class="page-header-row">
+        <div class="page-header-icon"><span class="material-icons">group_add</span></div>
+        <div class="page-header-title">Create AD Group</div>
       </div>
-
-      <div style="overflow-x:auto;margin-top:16px;">
-        <table style="width:100%;border-collapse:collapse;font-size:13px;">
-          <thead>
-            <tr>
-              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Status</th>
-              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">SYS ID</th>
-              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">App Key</th>
-              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">App Name</th>
-              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Cluster</th>
-              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Cluster Zone</th>
-              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Subdomain</th>
-              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Requestor</th>
-              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Reviewer</th>
-              <th style="text-align:left;padding:10px 14px;border-bottom:2px solid #e8eaed;font-weight:700;color:#555;font-size:12px;background:#fafafa;white-space:nowrap">Date Requested</th>
-            </tr>
-          </thead>
-          <tbody id="review-tbody">
-            <tr onclick="openReviewDetail('SYSID-09750')" style="cursor:pointer" onmouseover="this.style.background='#f8fffe'" onmouseout="this.style.background=''">
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0"><span style="background:#FFEBEE;color:#B71C1C;font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">Validation Failed</span></td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-weight:700">SYSID-09750</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">LQF</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Data Integration</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">p2</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">EKS</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">dev</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">SVC_PLATFORM</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">—</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Mar 15, 2026 05:01</td>
-            </tr>
-            <tr onclick="openReviewDetail('SYSID-08827')" style="cursor:pointer" onmouseover="this.style.background='#f8fffe'" onmouseout="this.style.background=''">
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0"><span style="background:#FFF9C4;color:#F57F17;font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">Pending Approval</span></td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-weight:700">SYSID-08827</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">IMB</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Security Platform</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">p2</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">EKS</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">dev</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">SVC_SERVICE</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">—</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Mar 12, 2026 12:25</td>
-            </tr>
-            <tr onclick="openReviewDetail('SYSID-09476')" style="cursor:pointer" onmouseover="this.style.background='#f8fffe'" onmouseout="this.style.background=''">
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0"><span style="background:#FFF9C4;color:#F57F17;font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">Pending Approval</span></td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-weight:700">SYSID-09476</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">YDX</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Limit Processing</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">p1</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">AWS-Openshift</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">qa</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">SUBRAMANIAN_K</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">—</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Mar 10, 2026 09:28</td>
-            </tr>
-            <tr onclick="openReviewDetail('SYSID-06759')" style="cursor:pointer" onmouseover="this.style.background='#f8fffe'" onmouseout="this.style.background=''">
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0"><span style="background:#E8F5E9;color:#2E7D32;font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">Success</span></td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-weight:700">SYSID-06759</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">TTU</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Pre-Clearance</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">p2</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">EKS</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">sit</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">MOULI_R</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Cindy A</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Mar 3, 2026 08:17</td>
-            </tr>
-            <tr onclick="openReviewDetail('SYSID-09472')" style="cursor:pointer" onmouseover="this.style.background='#f8fffe'" onmouseout="this.style.background=''">
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0"><span style="background:#FFF3E0;color:#E65100;font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">Rejected</span></td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0;font-weight:700">SYSID-09472</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">OCY</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">OCY Platform</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">p2</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">EKS</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">dev</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">YESWANTH_R</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Cindy A</td>
-              <td style="padding:10px 14px;border-bottom:1px solid #f0f0f0">Feb 23, 2026 15:41</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Detail modal -->
-      <div id="review-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:1000;display:none;align-items:center;justify-content:center">
-        <div style="background:#fff;border-radius:12px;width:560px;max-height:85vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.2)">
-          <div style="padding:20px 24px 0;display:flex;justify-content:space-between;align-items:flex-start">
-            <div>
-              <div id="modal-sysid" style="font-size:16px;font-weight:700;color:#1a1a1a"></div>
-              <div id="modal-date" style="font-size:12px;color:#888;margin-top:2px"></div>
-            </div>
-            <div style="display:flex;align-items:center;gap:12px">
-              <span id="modal-status-chip"></span>
-              <button onclick="closeReviewModal()" style="background:none;border:none;cursor:pointer;font-size:20px;color:#666;line-height:1">×</button>
-            </div>
+      <div class="page-header-subtitle">Create a new Active Directory group for your application or team.</div>
+      <hr class="page-divider">
+    </div>
+    <div class="cards-grid">
+      <div class="card coming-soon">
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-icon"><span class="material-icons">group_add</span></div>
+            <span class="status-chip status-coming-soon">Coming Soon</span>
           </div>
-          <div style="padding:16px 24px 24px" id="modal-body"></div>
+          <div class="card-title">Create Active Directory Group</div>
+          <div class="card-desc">Provisions a new Active Directory group scoped to your SYS ID. The group is created with the correct naming convention and ownership, ready for user assignment.</div>
+          <div class="card-tags">
+            <span class="tag">active-directory</span>
+            <span class="tag">iam</span>
+            <span class="tag">provisioning</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-launch disabled">
+            <span class="material-icons">schedule</span> Coming Soon
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- ══ PAGE: TEMS — Reserve Environment ══ -->
-    <div id="page-tms-reserve-env" class="page">
-      <div class="page-header">
-        <div class="page-header-row">
-          <div class="page-header-icon"><span class="material-icons">science</span></div>
-          <div class="page-header-title">TEMS</div>
-        </div>
-        <div class="page-header-subtitle">Test Management Services — reserve environments, manage test data, and run performance tests.</div>
-        <hr class="page-header-divider">
+  <!-- HOOVER — MANAGE USERS ──────────────────────────────────────────── -->
+  <div class="page" id="page-manage-users">
+    <div class="page-header">
+      <div class="page-header-row">
+        <div class="page-header-icon"><span class="material-icons">manage_accounts</span></div>
+        <div class="page-header-title">Manage Users in AD Group</div>
       </div>
-      <div class="cards-grid">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-header">
-              <div class="card-icon"><span class="material-icons">science</span></div>
-              <span class="status-chip status-available">Available</span>
-            </div>
-            <div class="card-title">Reserve Environment</div>
-            <div class="card-desc">Reserve a dedicated test environment for your application. Select environment tier, duration, and required integrations.</div>
-            <div class="card-tags">
-              <span class="tag">testing</span><span class="tag">environment</span><span class="tag">qa</span>
-            </div>
+      <div class="page-header-subtitle">Add or remove members from an existing Active Directory group.</div>
+      <hr class="page-divider">
+    </div>
+    <div class="cards-grid">
+      <div class="card coming-soon">
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-icon"><span class="material-icons">manage_accounts</span></div>
+            <span class="status-chip status-coming-soon">Coming Soon</span>
           </div>
-          <div class="card-actions">
-            <a class="btn-primary" href="#" onclick="alert('Opens Reserve Environment workflow.')">Reserve Environment</a>
+          <div class="card-title">Add Users to AD Group</div>
+          <div class="card-desc">Add one or more users to an existing Active Directory group. Specify the group and a comma-separated list of employee IDs to grant access.</div>
+          <div class="card-tags">
+            <span class="tag">active-directory</span>
+            <span class="tag">user-management</span>
+            <span class="tag">iam</span>
           </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-launch disabled">
+            <span class="material-icons">schedule</span> Coming Soon
+          </button>
+        </div>
+      </div>
+      <div class="card coming-soon">
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-icon"><span class="material-icons">person_remove</span></div>
+            <span class="status-chip status-coming-soon">Coming Soon</span>
+          </div>
+          <div class="card-title">Remove Users from AD Group</div>
+          <div class="card-desc">Remove one or more users from an existing Active Directory group. Access is revoked immediately after the pipeline completes.</div>
+          <div class="card-tags">
+            <span class="tag">active-directory</span>
+            <span class="tag">user-management</span>
+            <span class="tag">iam</span>
+          </div>
+        </div>
+        <div class="card-actions">
+          <button class="btn-launch disabled">
+            <span class="material-icons">schedule</span> Coming Soon
+          </button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- ══ PAGE: TEMS — Test Data Management ══ -->
-    <div id="page-tms-test-data" class="page">
-      <div class="page-header">
-        <div class="page-header-row">
-          <div class="page-header-icon"><span class="material-icons">science</span></div>
-          <div class="page-header-title">TEMS</div>
-        </div>
-        <div class="page-header-subtitle">Test Management Services — reserve environments, manage test data, and run performance tests.</div>
-        <hr class="page-header-divider">
+  <!-- FUSE — KUBERNETES ONBOARDING ──────────────────────────────────── -->
+  <div class="page" id="page-fuse">
+    <div class="page-header">
+      <div class="page-header-row">
+        <div class="page-header-icon"><span class="material-icons">dns</span></div>
+        <div class="page-header-title">Kubernetes Onboarding</div>
       </div>
-      <div class="cards-grid">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-header">
-              <div class="card-icon"><span class="material-icons">dataset</span></div>
-              <span class="status-chip status-available">Available</span>
-            </div>
-            <div class="card-title">Test Data Management</div>
-            <div class="card-desc">Request and manage test data sets for your application. Create, clone, or refresh test data in lower environments on demand.</div>
-            <div class="card-tags">
-              <span class="tag">testing</span><span class="tag">data</span><span class="tag">qa</span>
-            </div>
+      <div class="page-header-subtitle">Self-service PaaS namespace provisioning on the Fuse Kubernetes platform.</div>
+      <hr class="page-divider">
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-icon"><span class="material-icons">dns</span></div>
+            <span class="status-chip status-available">Available</span>
           </div>
-          <div class="card-actions">
-            <a class="btn-primary" href="#" onclick="alert('Opens Test Data Management workflow.')">Manage Test Data</a>
+          <div class="card-title">PaaS Namespace Onboarding</div>
+          <div class="card-desc">Provision a new Kubernetes namespace on the Fuse PaaS platform. Configures resource quotas, network policies, and RBAC for your application team based on your SYS ID and environment requirements.</div>
+          <div class="card-tags">
+            <span class="tag">kubernetes</span>
+            <span class="tag">paas</span>
+            <span class="tag">namespace</span>
+            <span class="tag">fuse</span>
           </div>
+        </div>
+        <div class="card-actions">
+          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQ1NDU4OS0Zj/module/idp/create/templates/accountv2_PaaS_Namespace_Onboarding" target="_blank">
+            <span class="material-icons">open_in_new</span> Launch Workflow
+          </a>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- ══ PAGE: TEMS — Performance Testing ══ -->
-    <div id="page-tms-perf-testing" class="page">
-      <div class="page-header">
-        <div class="page-header-row">
-          <div class="page-header-icon"><span class="material-icons">science</span></div>
-          <div class="page-header-title">TEMS</div>
-        </div>
-        <div class="page-header-subtitle">Test Management Services — reserve environments, manage test data, and run performance tests.</div>
-        <hr class="page-header-divider">
+  <!-- JARVIS — PUBLIC CLOUD ──────────────────────────────────────────── -->
+  <div class="page" id="page-jarvis">
+    <div class="page-header">
+      <div class="page-header-row">
+        <div class="page-header-icon"><span class="material-icons">cloud</span></div>
+        <div class="page-header-title">Public Cloud Onboarding</div>
       </div>
-      <div class="cards-grid">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-header">
-              <div class="card-icon"><span class="material-icons">speed</span></div>
-              <span class="status-chip status-available">Available</span>
-            </div>
-            <div class="card-title">Performance Testing</div>
-            <div class="card-desc">Submit load, stress, and soak test requests for your service. Configure test parameters and view results directly from the portal.</div>
-            <div class="card-tags">
-              <span class="tag">performance</span><span class="tag">load-test</span><span class="tag">qa</span>
-            </div>
+      <div class="page-header-subtitle">Self-service infrastructure pattern fitment for public cloud provisioning via Jarvis.</div>
+      <hr class="page-divider">
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-icon"><span class="material-icons">cloud_upload</span></div>
+            <span class="status-chip status-available">Available</span>
           </div>
-          <div class="card-actions">
-            <a class="btn-primary" href="#" onclick="alert('Opens Performance Testing workflow.')">Run Performance Test</a>
+          <div class="card-title">Public Cloud Infrastructure Onboarding</div>
+          <div class="card-desc">Captures your application's infrastructure pattern fitment — cloud type, tier definitions, database configuration, AD group approvers, and governance details. Submits to Jarvis for cloud architect review and provisioning.</div>
+          <div class="card-tags">
+            <span class="tag">aws</span>
+            <span class="tag">azure</span>
+            <span class="tag">jarvis</span>
+            <span class="tag">cloud</span>
+            <span class="tag">infrastructure</span>
           </div>
+        </div>
+        <div class="card-actions">
+          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQ1NDU4OS0Zj/module/idp/create/templates/account/platform_public_cloud_onboarding" target="_blank">
+            <span class="material-icons">open_in_new</span> Launch Workflow
+          </a>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- ══ PAGE: Fuse Services — Request ══ -->
-    <div id="page-fuse-onboarding-request" class="page">
-      <div class="page-header">
-        <div class="page-header-row">
-          <div class="page-header-icon"><span class="material-icons">dns</span></div>
-          <div class="page-header-title">Fuse Services</div>
-        </div>
-        <div class="page-header-subtitle">Onboard and manage services on the Fuse platform — namespace setup, service mesh, and more.</div>
-        <hr class="page-header-divider">
+  <!-- TEMS — CREATE TEST ENV ─────────────────────────────────────────── -->
+  <div class="page" id="page-tems">
+    <div class="page-header">
+      <div class="page-header-row">
+        <div class="page-header-icon"><span class="material-icons">science</span></div>
+        <div class="page-header-title">Create Test Environment</div>
       </div>
-      <div class="cards-grid">
-        <div class="card">
-          <div class="card-content">
-            <div class="card-header">
-              <div class="card-icon"><span class="material-icons">rocket_launch</span></div>
-              <span class="status-chip status-available">Available</span>
-            </div>
-            <div class="card-title">Onboarding</div>
-            <div class="card-desc">Onboard a new service onto the Fuse platform — register your application, configure namespace, and set up service mesh integration from a single form.</div>
-            <div class="card-tags">
-              <span class="tag">fuse</span>
-              <span class="tag">kubernetes</span>
-              <span class="tag">namespace</span>
-              <span class="tag">service-mesh</span>
-            </div>
+      <div class="page-header-subtitle">Reserve a managed test environment from the TEMS platform.</div>
+      <hr class="page-divider">
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-top">
+            <div class="card-icon"><span class="material-icons">science</span></div>
+            <span class="status-chip status-available">Available</span>
           </div>
-          <div class="card-actions">
-            <a class="btn-primary" href="#" onclick="alert('Opens Fuse Onboarding workflow.')">Start Onboarding</a>
+          <div class="card-title">Reserve Test Environment</div>
+          <div class="card-desc">Reserve a test environment for your application through the Test Environment Management System (TEMS). Specify your SYS ID, environment type, and duration. The environment is provisioned and access details are returned via the pipeline.</div>
+          <div class="card-tags">
+            <span class="tag">tems</span>
+            <span class="tag">test</span>
+            <span class="tag">environment</span>
+            <span class="tag">qa</span>
           </div>
+        </div>
+        <div class="card-actions">
+          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQ1NDU4OS0Zj/module/idp/create/templates/account/tems_reserve_environment" target="_blank">
+            <span class="material-icons">open_in_new</span> Launch Workflow
+          </a>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- ══ PAGE: Video Guides ══ -->
-    <div id="page-videos" class="page">
-      <div class="page-header">
-        <div class="page-header-row">
-          <div class="page-header-icon"><span class="material-icons">ondemand_video</span></div>
-          <div class="page-header-title">Video Guides</div>
-        </div>
-        <div class="page-header-subtitle">Step-by-step walkthroughs for common platform tasks — watch at your own pace.</div>
-        <hr class="page-header-divider">
-      </div>
-      <div class="video-grid">
-        <div class="video-card">
-          <div class="video-thumb">
-            <span class="material-icons">play_circle_filled</span>
-            <span class="video-duration">4:12</span>
-          </div>
-          <div class="video-body">
-            <div class="video-title">Creating a GitHub Repository</div>
-            <div class="video-desc">Learn how to provision a new repo with Okta groups and GitHub Teams using the self-service form.</div>
-            <a href="#" class="video-watch"><span class="material-icons">play_arrow</span> Watch</a>
-          </div>
-        </div>
-        <div class="video-card">
-          <div class="video-thumb">
-            <span class="material-icons">play_circle_filled</span>
-            <span class="video-duration">3:45</span>
-          </div>
-          <div class="video-body">
-            <div class="video-title">Managing GitHub Teams &amp; Permissions</div>
-            <div class="video-desc">Understand how Developers and Admins groups map to GitHub Team roles.</div>
-            <a href="#" class="video-watch"><span class="material-icons">play_arrow</span> Watch</a>
-          </div>
-        </div>
-        <div class="video-card">
-          <div class="video-thumb">
-            <span class="material-icons">play_circle_filled</span>
-            <span class="video-duration">6:30</span>
-          </div>
-          <div class="video-body">
-            <div class="video-title">Harness IDP Workflow Overview</div>
-            <div class="video-desc">A quick tour of the IDP scaffolder and how platform workflows are triggered.</div>
-            <a href="#" class="video-watch"><span class="material-icons">play_arrow</span> Watch</a>
-          </div>
-        </div>
-        <div class="video-card">
-          <div class="video-thumb">
-            <span class="material-icons">play_circle_filled</span>
-            <span class="video-duration">5:00</span>
-          </div>
-          <div class="video-body">
-            <div class="video-title">Okta Group Provisioning Deep Dive</div>
-            <div class="video-desc">How Okta groups are created, named, and linked to GitHub Teams automatically.</div>
-            <a href="#" class="video-watch"><span class="material-icons">play_arrow</span> Watch</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ PAGE: Contact Us ══ -->
-    <div id="page-contact" class="page">
-      <div class="page-header">
-        <div class="page-header-row">
-          <div class="page-header-icon"><span class="material-icons">support_agent</span></div>
-          <div class="page-header-title">Contact Us</div>
-        </div>
-        <div class="page-header-subtitle">Reach the Platform Engineering team through any of these channels.</div>
-        <hr class="page-header-divider">
-      </div>
-      <div class="contact-grid">
-        <div class="contact-card">
-          <span class="material-icons contact-icon">chat</span>
-          <div class="contact-label">Slack</div>
-          <div class="contact-value">#platform-engineering</div>
-          <a href="#" class="contact-link">Open Slack →</a>
-        </div>
-        <div class="contact-card">
-          <span class="material-icons contact-icon">email</span>
-          <div class="contact-label">Email</div>
-          <div class="contact-value">platform-eng@company.com</div>
-          <a href="mailto:platform-eng@company.com" class="contact-link">Send Email →</a>
-        </div>
-        <div class="contact-card">
-          <span class="material-icons contact-icon">bug_report</span>
-          <div class="contact-label">Jira</div>
-          <div class="contact-value">Platform Engineering board</div>
-          <a href="#" class="contact-link">Open Jira →</a>
-        </div>
-        <div class="contact-card">
-          <span class="material-icons contact-icon">groups</span>
-          <div class="contact-label">Office Hours</div>
-          <div class="contact-value">Wednesdays 14:00–15:00 UTC</div>
-          <a href="#" class="contact-link">Join Call →</a>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ PAGE: Request a Feature ══ -->
-    <div id="page-request-feature" class="page">
-      <div class="page-header">
-        <div class="page-header-row">
-          <div class="page-header-icon"><span class="material-icons">lightbulb</span></div>
-          <div class="page-header-title">Request a Feature</div>
-        </div>
-        <div class="page-header-subtitle">Tell us what would make the portal more useful. We review every submission.</div>
-        <hr class="page-header-divider">
-      </div>
-      <div id="feature-success" class="success-box" style="display:none">
-        <span class="material-icons">check_circle</span>
-        <div>
-          <div class="success-title">Request submitted!</div>
-          <div class="success-sub">Thanks — the Platform Engineering team will review your idea.</div>
-        </div>
-      </div>
-      <div id="feature-form" class="feature-form">
-        <div>
-          <label class="form-label">Feature title *</label>
-          <input id="feat-title" class="form-input" placeholder="e.g. Archive Repository service" />
-        </div>
-        <div>
-          <label class="form-label">Description *</label>
-          <textarea id="feat-desc" class="form-textarea" placeholder="Describe the feature and why it would be useful..."></textarea>
-        </div>
-        <button class="submit-btn" onclick="submitFeature()">Submit Request</button>
-      </div>
-    </div>
-
-  </div><!-- /.page-inner -->
 </main>
 
 <script>
-  // ── Nav section collapse ──────────────────────────────────────────────────
-  function toggleSection(id) {
-    const body    = document.getElementById('body-' + id);
-    const chevron = document.getElementById('chevron-' + id);
-    const header  = body.previousElementSibling;
-    const isOpen  = body.classList.contains('open');
-    body.classList.toggle('open', !isOpen);
-    chevron.classList.toggle('open', !isOpen);
-    header.setAttribute('aria-expanded', String(!isOpen));
+  let unreadCount = 3;
+
+  function toggleNotifications() {
+    const panel = document.getElementById('notif-panel');
+    panel.classList.toggle('open');
   }
 
-  // ── Page switching ────────────────────────────────────────────────────────
-  function showPage(id, el) {
+  document.addEventListener('click', function(e) {
+    const panel = document.getElementById('notif-panel');
+    const btn = document.querySelector('.bell-btn');
+    if (!panel.contains(e.target) && !btn.contains(e.target)) {
+      panel.classList.remove('open');
+    }
+  });
+
+  function readNotif(id) {
+    const el = document.getElementById(id);
+    const dot = document.getElementById('dot-' + id);
+    if (el && el.classList.contains('unread')) {
+      el.classList.remove('unread');
+      if (dot) dot.style.display = 'none';
+      unreadCount = Math.max(0, unreadCount - 1);
+      updateBadge();
+    }
+  }
+
+  function markAllRead() {
+    ['notif-1','notif-2','notif-3'].forEach(id => {
+      const el = document.getElementById(id);
+      const dot = document.getElementById('dot-' + id);
+      if (el) el.classList.remove('unread');
+      if (dot) dot.style.display = 'none';
+    });
+    unreadCount = 0;
+    updateBadge();
+  }
+
+  function updateBadge() {
+    const badge = document.getElementById('bell-badge');
+    if (unreadCount > 0) {
+      badge.textContent = unreadCount;
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  }
+
+  const SECTION_PAGES = {
+    home:   'home',
+    fuse:   'fuse',
+    jarvis: 'jarvis',
+    tems:   'tems',
+  };
+
+  function showSection(section) {
+    // Update primary tab highlights
+    document.querySelectorAll('.primary-tab').forEach(t => t.classList.remove('active'));
+    const tab = document.getElementById('tab-' + section);
+    if (tab) tab.classList.add('active');
+
+    // Hide all sub-navs
+    document.querySelectorAll('.sub-nav').forEach(n => n.classList.remove('visible'));
+
+    if (section === 'hoover') {
+      document.getElementById('sub-nav-hoover').classList.add('visible');
+      // Show first Hoover page
+      const active = document.querySelector('#sub-nav-hoover .sub-tab.active');
+      const activePage = active ? active.id.replace('subtab-', '') : 'create-repo';
+      showPageOnly(activePage);
+    } else {
+      const pageId = SECTION_PAGES[section];
+      if (pageId) showPageOnly(pageId);
+    }
+  }
+
+  function showPage(pageId) {
+    // Update sub-tab highlight
+    document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
+    const tab = document.getElementById('subtab-' + pageId);
+    if (tab) tab.classList.add('active');
+    showPageOnly(pageId);
+  }
+
+  function showPageOnly(pageId) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + id).classList.add('active');
-    document.querySelectorAll('.nav-child').forEach(c => c.classList.remove('active'));
-    el.classList.add('active');
+    const page = document.getElementById('page-' + pageId);
+    if (page) page.classList.add('active');
   }
-
-  // ── Feature request form ──────────────────────────────────────────────────
-  function submitFeature() {
-    const title = document.getElementById('feat-title').value.trim();
-    const desc  = document.getElementById('feat-desc').value.trim();
-    if (!title || !desc) { alert('Please fill in both fields.'); return; }
-    document.getElementById('feature-form').style.display = 'none';
-    document.getElementById('feature-success').style.display = 'flex';
-  }
-
-  // ── Review modal ─────────────────────────────────────────────────────────
-  // In preview: IS_PAAS_ADMIN = true to show approve/reject buttons
-  const IS_PAAS_ADMIN = true;
-
-  const REVIEW_DATA = {
-    'SYSID-09750': { sysId:'SYSID-09750', appKey:'LQF', appName:'Data Integration Service', cluster:'p2', clusterZone:'EKS', appType:'COTS', activeCluster:'SHARED1', town:'cyber', subdomain:'dev', demandNumber:'DMND9988776', glooMesh:'disabled', description:'New service onboarding request', requestor:'SVC_PLATFORM', primaryApprover:'n001234', secondaryApprover:'J056789', status:'Validation Failed', date:'Mar 15, 2026 05:01', reviewer:'' },
-    'SYSID-08827': { sysId:'SYSID-08827', appKey:'IMB', appName:'Security Platform', cluster:'p2', clusterZone:'EKS', appType:'COTS', activeCluster:'SHARED1', town:'cyber', subdomain:'dev', demandNumber:'DMND1234567', glooMesh:'disabled', description:'Town: cyber Owner: dl-dso-IMB-team Systems: SYSID-08827', requestor:'SVC_SERVICE', primaryApprover:'n002150', secondaryApprover:'J042773', status:'Pending Approval', date:'Mar 12, 2026 12:25', reviewer:'' },
-    'SYSID-09476': { sysId:'SYSID-09476', appKey:'YDX', appName:'Limit Processing', cluster:'p1', clusterZone:'AWS-Openshift', appType:'Internal', activeCluster:'SHARED2', town:'metro', subdomain:'qa', demandNumber:'DMND5544332', glooMesh:'enabled', description:'QA namespace for limit testing', requestor:'SUBRAMANIAN_K', primaryApprover:'n003456', secondaryApprover:'J078901', status:'Pending Approval', date:'Mar 10, 2026 09:28', reviewer:'' },
-    'SYSID-06759': { sysId:'SYSID-06759', appKey:'TTU', appName:'Pre-Clearance Service', cluster:'p2', clusterZone:'EKS', appType:'COTS', activeCluster:'SHARED1', town:'cyber', subdomain:'sit', demandNumber:'DMND3322110', glooMesh:'disabled', description:'SIT environment setup', requestor:'MOULI_R', primaryApprover:'n004567', secondaryApprover:'J089012', status:'Success', date:'Mar 3, 2026 08:17', reviewer:'Cindy A' },
-    'SYSID-09472': { sysId:'SYSID-09472', appKey:'OCY', appName:'OCY Platform', cluster:'p2', clusterZone:'EKS', appType:'Internal', activeCluster:'SHARED2', town:'uptown', subdomain:'dev', demandNumber:'DMND9876543', glooMesh:'disabled', description:'Dev platform setup', requestor:'YESWANTH_R', primaryApprover:'n008901', secondaryApprover:'J045678', status:'Rejected', date:'Feb 23, 2026 15:41', reviewer:'Cindy A', rejectionReason:'Invalid demand number provided' },
-  };
-
-  const STATUS_COLORS = {
-    'Pending Approval':  { bg:'#FFF9C4', color:'#F57F17' },
-    'Validation Failed': { bg:'#FFEBEE', color:'#B71C1C' },
-    'Success':           { bg:'#E8F5E9', color:'#2E7D32' },
-    'Failed':            { bg:'#EEEEEE', color:'#616161' },
-    'Rejected':          { bg:'#FFF3E0', color:'#E65100' },
-  };
-
-  function field(label, value) {
-    return `<div style="margin-bottom:16px"><div style="font-size:12px;color:#666;font-weight:600;margin-bottom:4px">${label}</div><div style="padding:8px 12px;border:1px solid #e8eaed;border-radius:6px;font-size:13px;background:#fafafa">${value || '—'}</div></div>`;
-  }
-
-  function openReviewDetail(sysId) {
-    const r = REVIEW_DATA[sysId]; if (!r) return;
-    const sc = STATUS_COLORS[r.status] || STATUS_COLORS['Failed'];
-    document.getElementById('modal-sysid').textContent = r.sysId;
-    document.getElementById('modal-date').textContent = 'Last update: ' + r.date;
-    document.getElementById('modal-status-chip').innerHTML = `<span style="background:${sc.bg};color:${sc.color};font-size:11px;font-weight:700;padding:3px 10px;border-radius:11px">${r.status}</span>`;
-
-    const adminBtns = (IS_PAAS_ADMIN && r.status === 'Pending Approval') ? `
-      <div style="display:flex;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid #e8eaed">
-        <button onclick="previewReject('${sysId}')" style="background:#fff;color:#c62828;border:1.5px solid #c62828;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer">Reject</button>
-        <button onclick="previewApprove('${sysId}')" style="background:#00965E;color:#fff;border:none;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer">Approve</button>
-        <button onclick="closeReviewModal()" style="margin-left:auto;background:none;border:1px solid #e8eaed;border-radius:6px;padding:8px 18px;font-size:13px;cursor:pointer;color:#555">Close</button>
-      </div>` : `<div style="display:flex;justify-content:flex-end;margin-top:20px;padding-top:16px;border-top:1px solid #e8eaed"><button onclick="closeReviewModal()" style="background:none;border:1px solid #e8eaed;border-radius:6px;padding:8px 18px;font-size:13px;cursor:pointer;color:#555">Close</button></div>`;
-
-    document.getElementById('modal-body').innerHTML = `
-      <div style="font-size:12px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px">Onboarding Request</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 16px">
-        ${field('SYS ID', r.sysId)}${field('App Key', r.appKey)}
-        ${field('App Name', r.appName)}${field('Cluster', r.cluster)}
-        ${field('PaaS Cluster Zone', r.clusterZone)}${field('App Type', r.appType)}
-        ${field('Active Cluster', r.activeCluster)}${field('Town', r.town)}
-        ${field('Sub Domain', r.subdomain)}${field('Demand Number', r.demandNumber)}
-        ${field('Gloo Mesh', r.glooMesh)}${field('Requestor', r.requestor)}
-      </div>
-      ${field('Description', r.description)}
-      <div style="font-size:12px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.05em;margin:16px 0 12px">AD Groups</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 16px">
-        ${field('Primary Approver', r.primaryApprover)}${field('Secondary Approver', r.secondaryApprover)}
-      </div>
-      ${r.rejectionReason ? `<div style="font-size:12px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.05em;margin:16px 0 8px">Rejection Reason</div>${field('', r.rejectionReason)}` : ''}
-      ${adminBtns}`;
-
-    const modal = document.getElementById('review-modal');
-    modal.style.display = 'flex';
-  }
-
-  function closeReviewModal() {
-    document.getElementById('review-modal').style.display = 'none';
-  }
-
-  function previewApprove(sysId) {
-    alert('✅ SYSID ' + sysId + ' approved.\n\n(In production: calls PUT /api/onboarding/' + sysId + '/status → Success)');
-    closeReviewModal();
-  }
-
-  function previewReject(sysId) {
-    const reason = prompt('Enter rejection reason:');
-    if (!reason) return;
-    alert('❌ SYSID ' + sysId + ' rejected.\nReason: ' + reason + '\n\n(In production: calls PUT /api/onboarding/' + sysId + '/status → Rejected)');
-    closeReviewModal();
-  }
-
-  // ── Notification banners ──────────────────────────────────────────────────
-  const BANNERS = [
-    { type:'new',         icon:'new_releases', msg:'GitHub Self-Service Portal is now live. Create repositories with Okta groups and GitHub Teams from a single form.',        bg:'#E6F5EF', color:'#007A4D' },
-    { type:'maintenance', icon:'build',        msg:'Scheduled maintenance: Nexus Repository Manager will be unavailable Saturday 08:00–10:00 UTC.',                          bg:'#fff3e0', color:'#e65100' },
-    { type:'info',        icon:'info',         msg:'New: Archive Repository service coming soon — stay tuned.',                                                               bg:'#e3f2fd', color:'#1565c0' },
-  ];
-  let bi = 0;
-  function renderBanner() {
-    const b = BANNERS[bi];
-    const el = document.getElementById('banner');
-    if (!el) return;
-    el.style.background = b.bg;
-    el.querySelectorAll('[style]').forEach(n => n.style.color = b.color);
-    document.getElementById('banner-icon').textContent = b.icon;
-    document.getElementById('banner-msg').textContent = b.msg;
-    document.getElementById('banner-count').textContent = `${bi+1}/${BANNERS.length}`;
-  }
-  function nextBanner() { bi = (bi+1) % BANNERS.length; renderBanner(); }
-  function prevBanner() { bi = (bi-1+BANNERS.length) % BANNERS.length; renderBanner(); }
 </script>
 </body>
 </html>

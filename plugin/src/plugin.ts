@@ -3,7 +3,7 @@ import {
   createRoutableExtension,
   createRouteRef,
 } from '@backstage/core-plugin-api';
-import { GitHubPortal } from './components/GitHubPortal';
+import { SelfServicePortal } from './components/SelfServicePortal';
 
 export const rootRouteRef = createRouteRef({
   id: 'selfservice-github',
@@ -19,7 +19,7 @@ export const selfserviceGithubPlugin = createPlugin({
 export const SelfService = selfserviceGithubPlugin.provide(
   createRoutableExtension({
     name: 'SelfService',
-    component: () => Promise.resolve(GitHubPortal),
+    component: () => Promise.resolve(SelfServicePortal),
     mountPoint: rootRouteRef,
   }),
 );
