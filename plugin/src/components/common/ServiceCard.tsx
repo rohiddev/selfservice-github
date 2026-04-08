@@ -202,7 +202,7 @@ export function ServiceCard({ icon, title, description, status, workflowUrl, vid
           className={classes.launchBtn}
           disabled={isDisabled}
           onClick={() => { if (!isDisabled) { window.open(workflowUrl, '_blank', 'noopener,noreferrer'); } }}
-          endIcon={<Icon style={{ fontSize: 16 }}>arrow_forward</Icon>}
+          endIcon={<Icon style={{ fontSize: 16 }}>open_in_new</Icon>}
           aria-label={`Launch ${title} workflow`}
         >
           {isDisabled ? 'Coming Soon' : 'Launch'}
