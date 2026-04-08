@@ -53,7 +53,12 @@
     transition: color 0.15s, border-color 0.15s;
   }
   .primary-tab:hover { color: rgba(255,255,255,0.9); }
-  .primary-tab.active { color: #fff; border-bottom-color: #fff; }
+  .primary-tab.active {
+    color: #fff;
+    border-bottom-color: #fff;
+    background: rgba(99,102,241,0.22);
+    border-radius: 6px 6px 0 0;
+  }
 
   /* ── Bell ───────────────────────────────────────────────────────────── */
   .bell-btn {
@@ -252,6 +257,59 @@
   .quick-icon .material-icons { color: #1A1A2E; font-size: 22px; }
   .quick-title { font-weight: 700; font-size: 14px; color: #1a1a1a; }
   .quick-desc { font-size: 12px; color: #777; margin-top: 2px; }
+
+  /* ── Video modal ─────────────────────────────────────────────────────── */
+  .video-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+  }
+  .video-overlay.open { display: flex; }
+  .video-dialog {
+    background: #fff;
+    border-radius: 12px;
+    width: 820px; max-width: calc(100vw - 32px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.25);
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .video-dialog-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px 12px 20px;
+    border-bottom: 1px solid #e8eaed;
+    flex-shrink: 0;
+  }
+  .video-dialog-title { font-weight: 700; font-size: 15px; color: #1a1a1a; }
+  .video-close-btn {
+    background: none; border: none; cursor: pointer;
+    color: #555; padding: 4px; border-radius: 6px;
+    display: flex; align-items: center;
+    transition: background 0.12s;
+  }
+  .video-close-btn:hover { background: #f0f0f0; color: #1a1a1a; }
+  .video-close-btn .material-icons { font-size: 20px; }
+  .video-frame {
+    width: 100%; height: 460px;
+    border: none; display: block;
+    background: #f5f5f5;
+  }
+  .video-placeholder {
+    width: 100%; height: 460px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    background: #f8f9fa; gap: 12px;
+    color: #888;
+  }
+  .video-placeholder .material-icons { font-size: 48px; color: #C7D2FE; }
+  .video-placeholder-text { font-size: 14px; font-weight: 600; color: #555; }
+  .video-placeholder-sub { font-size: 12px; color: #aaa; }
+
+  /* Enable Watch Video button for demo */
+  .btn-video { cursor: pointer; opacity: 1; }
+  .btn-video:hover { background: #EEF2FF; border-color: #1A1A2E; }
 </style>
 </head>
 <body>
@@ -395,9 +453,9 @@
           </div>
         </div>
         <div class="card-actions">
-          <span class="btn-video"><span class="material-icons">play_circle</span> Watch Video</span>
-          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQtNDU4OS00Zj/module/idp/entity/edit/account/workflow/v2_github_repo_ad_provisioner" target="_blank">
-            <span class="material-icons">open_in_new</span> Launch
+          <button class="btn-video" onclick="openVideo('Provision GitHub Repository')"><span class="material-icons">play_circle</span> Watch Video</button>
+          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQtNDU4OS00Zj/module/idp/entity/edit/account/workflow/v2_github_repo_ad_provisioner">
+            <span class="material-icons">arrow_forward</span> Launch
           </a>
         </div>
       </div>
@@ -430,7 +488,7 @@
           </div>
         </div>
         <div class="card-actions">
-          <span class="btn-video"><span class="material-icons">play_circle</span> Watch Video</span>
+          <button class="btn-video" onclick="openVideo('Create Active Directory Group')"><span class="material-icons">play_circle</span> Watch Video</button>
           <button class="btn-launch disabled">
             <span class="material-icons">schedule</span> Coming Soon
           </button>
@@ -465,7 +523,7 @@
           </div>
         </div>
         <div class="card-actions">
-          <span class="btn-video"><span class="material-icons">play_circle</span> Watch Video</span>
+          <button class="btn-video" onclick="openVideo('Add Users to AD Group')"><span class="material-icons">play_circle</span> Watch Video</button>
           <button class="btn-launch disabled">
             <span class="material-icons">schedule</span> Coming Soon
           </button>
@@ -486,7 +544,7 @@
           </div>
         </div>
         <div class="card-actions">
-          <span class="btn-video"><span class="material-icons">play_circle</span> Watch Video</span>
+          <button class="btn-video" onclick="openVideo('Remove Users from AD Group')"><span class="material-icons">play_circle</span> Watch Video</button>
           <button class="btn-launch disabled">
             <span class="material-icons">schedule</span> Coming Soon
           </button>
@@ -522,9 +580,9 @@
           </div>
         </div>
         <div class="card-actions">
-          <span class="btn-video"><span class="material-icons">play_circle</span> Watch Video</span>
-          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQtNDU4OS00Zj/module/idp/create/templates/account/v2_PaaS_Namespace_Onboarding" target="_blank">
-            <span class="material-icons">open_in_new</span> Launch
+          <button class="btn-video" onclick="openVideo('PaaS Namespace Onboarding')"><span class="material-icons">play_circle</span> Watch Video</button>
+          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQtNDU4OS00Zj/module/idp/create/templates/account/v2_PaaS_Namespace_Onboarding">
+            <span class="material-icons">arrow_forward</span> Launch
           </a>
         </div>
       </div>
@@ -559,9 +617,9 @@
           </div>
         </div>
         <div class="card-actions">
-          <span class="btn-video"><span class="material-icons">play_circle</span> Watch Video</span>
-          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQtNDU4OS00Zj/module/idp/create/templates/account/platform_public_cloud_onboarding" target="_blank">
-            <span class="material-icons">open_in_new</span> Launch
+          <button class="btn-video" onclick="openVideo('Public Cloud Infrastructure Onboarding')"><span class="material-icons">play_circle</span> Watch Video</button>
+          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQtNDU4OS00Zj/module/idp/create/templates/account/platform_public_cloud_onboarding">
+            <span class="material-icons">arrow_forward</span> Launch
           </a>
         </div>
       </div>
@@ -595,9 +653,9 @@
           </div>
         </div>
         <div class="card-actions">
-          <span class="btn-video"><span class="material-icons">play_circle</span> Watch Video</span>
-          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQtNDU4OS00Zj/module/idp/create/templates/account/tems_reserve_environment" target="_blank">
-            <span class="material-icons">open_in_new</span> Launch
+          <button class="btn-video" onclick="openVideo('Reserve Test Environment')"><span class="material-icons">play_circle</span> Watch Video</button>
+          <a class="btn-launch" href="https://citizensbankdev.harness.io/ng/account/N2EzMWI4YjQtNDU4OS00Zj/module/idp/create/templates/account/tems_reserve_environment">
+            <span class="material-icons">arrow_forward</span> Launch
           </a>
         </div>
       </div>
@@ -605,6 +663,26 @@
   </div>
 
 </main>
+
+<!-- ══ VIDEO MODAL ══════════════════════════════════════════════════════ -->
+<div class="video-overlay" id="video-overlay" onclick="handleOverlayClick(event)">
+  <div class="video-dialog" id="video-dialog">
+    <div class="video-dialog-header">
+      <span class="video-dialog-title" id="video-dialog-title">Video Walkthrough</span>
+      <button class="video-close-btn" onclick="closeVideo()" aria-label="Close video">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+    <div id="video-body">
+      <!-- Placeholder shown when no SharePoint URL is set yet -->
+      <div class="video-placeholder">
+        <span class="material-icons">play_circle</span>
+        <span class="video-placeholder-text">Video coming soon</span>
+        <span class="video-placeholder-sub">SharePoint embed URL will be added here</span>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
   let unreadCount = 3;
@@ -653,6 +731,50 @@
       badge.classList.add('hidden');
     }
   }
+
+  // ── Video modal ─────────────────────────────────────────────────────────
+  // VIDEO_URLS: fill in SharePoint embed src values when available
+  const VIDEO_URLS = {
+    'Provision GitHub Repository':           '',
+    'Create Active Directory Group':         '',
+    'Add Users to AD Group':                 '',
+    'Remove Users from AD Group':            '',
+    'PaaS Namespace Onboarding':             '',
+    'Public Cloud Infrastructure Onboarding':'',
+    'Reserve Test Environment':              '',
+  };
+
+  function openVideo(title) {
+    document.getElementById('video-dialog-title').textContent = title;
+    const url = VIDEO_URLS[title] || '';
+    const body = document.getElementById('video-body');
+    if (url) {
+      body.innerHTML = `<iframe class="video-frame" src="${url}" title="${title} walkthrough" allow="autoplay; fullscreen" allowfullscreen></iframe>`;
+    } else {
+      body.innerHTML = `
+        <div class="video-placeholder">
+          <span class="material-icons">play_circle</span>
+          <span class="video-placeholder-text">Video coming soon</span>
+          <span class="video-placeholder-sub">SharePoint embed URL will be added here</span>
+        </div>`;
+    }
+    document.getElementById('video-overlay').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVideo() {
+    document.getElementById('video-overlay').classList.remove('open');
+    document.getElementById('video-body').innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  function handleOverlayClick(e) {
+    if (e.target === document.getElementById('video-overlay')) closeVideo();
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeVideo();
+  });
 
   const SECTION_PAGES = {
     home:   'home',

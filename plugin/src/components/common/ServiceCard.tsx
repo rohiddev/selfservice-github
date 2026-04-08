@@ -1,5 +1,5 @@
-import React from 'react';
-import { Button, Chip, Icon, Typography, makeStyles } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Button, Chip, Dialog, DialogContent, DialogTitle, Icon, IconButton, Typography, makeStyles } from '@material-ui/core';
 
 export type ServiceStatus = 'available' | 'beta' | 'coming-soon';
 
@@ -97,6 +97,28 @@ const useStyles = makeStyles(theme => ({
     '&:hover': { backgroundColor: '#EEF2FF', borderColor: '#1A1A2E' },
     '&:disabled': { borderColor: '#e0e0e0', color: '#bbb' },
   },
+  dialogTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: '12px 16px 12px 20px',
+    borderBottom: '1px solid #e8eaed',
+  },
+  dialogTitleText: {
+    fontWeight: 700,
+    fontSize: 15,
+    color: '#1a1a1a',
+  },
+  closeBtn: {
+    color: '#555',
+    padding: 6,
+  },
+  videoFrame: {
+    width: '100%',
+    height: 480,
+    border: 'none',
+    display: 'block',
+  },
   launchBtn: {
     backgroundColor: '#1A1A2E',
     color: '#fff',
@@ -115,6 +137,7 @@ export function ServiceCard({ icon, title, description, status, workflowUrl, vid
   const classes = useStyles();
   const statusCfg = STATUS_CONFIG[status];
   const isDisabled = status === 'coming-soon';
+  const [videoOpen, setVideoOpen] = useState(false);
 
   return (
     <div className={classes.card}>
@@ -142,16 +165,43 @@ export function ServiceCard({ icon, title, description, status, workflowUrl, vid
         <Button
           className={classes.videoBtn}
           disabled={!videoUrl}
-          onClick={() => videoUrl && window.open(videoUrl, '_blank', 'noopener,noreferrer')}
+          onClick={() => videoUrl && setVideoOpen(true)}
           startIcon={<Icon style={{ fontSize: 16 }}>play_circle</Icon>}
           aria-label={`Watch video for ${title}`}
         >
           Watch Video
         </Button>
+
+        {/* Video dialog */}
+        <Dialog
+          open={videoOpen}
+          onClose={() => setVideoOpen(false)}
+          maxWidth="md"
+          fullWidth
+          aria-labelledby={`video-dialog-${title}`}
+        >
+          <DialogTitle disableTypography className={classes.dialogTitle} id={`video-dialog-${title}`}>
+            <Typography className={classes.dialogTitleText}>{title}</Typography>
+            <IconButton className={classes.closeBtn} onClick={() => setVideoOpen(false)} aria-label="Close video">
+              <Icon style={{ fontSize: 20 }}>close</Icon>
+            </IconButton>
+          </DialogTitle>
+          <DialogContent style={{ padding: 0 }}>
+            {videoUrl && (
+              <iframe
+                className={classes.videoFrame}
+                src={videoUrl}
+                title={`${title} walkthrough video`}
+                allow="autoplay; fullscreen"
+                allowFullScreen
+              />
+            )}
+          </DialogContent>
+        </Dialog>
         <Button
           className={classes.launchBtn}
           disabled={isDisabled}
-          onClick={() => !isDisabled && window.open(workflowUrl, '_blank', 'noopener,noreferrer')}
+          onClick={() => { if (!isDisabled) { window.location.href = workflowUrl; } }}
           endIcon={<Icon style={{ fontSize: 16 }}>arrow_forward</Icon>}
           aria-label={`Launch ${title} workflow`}
         >

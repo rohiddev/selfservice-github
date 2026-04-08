@@ -176,7 +176,11 @@ const useStyles = makeStyles(theme => ({
     textTransform: 'none' as const,
     minWidth: 'auto',
     padding: theme.spacing(1.5, 2),
-    '&.Mui-selected': { color: '#fff' },
+    '&.Mui-selected': {
+      color: '#fff',
+      backgroundColor: 'rgba(99,102,241,0.22)',
+      borderRadius: 6,
+    },
   },
 
   // Bell button

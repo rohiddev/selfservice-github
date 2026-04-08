@@ -87,11 +87,11 @@ export function HomePage() {
           <Grid item xs={12} sm={6} md={4} key={link.title}>
             <div
               className={classes.quickCard}
-              onClick={() => { if (link.url) window.open(link.url, '_blank', 'noopener,noreferrer'); }}
+              onClick={() => { if (link.url) { window.location.href = link.url; } }}
               role="button"
               tabIndex={link.url ? 0 : -1}
               onKeyDown={(e: React.KeyboardEvent) => {
-                if (link.url && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); window.open(link.url, '_blank', 'noopener,noreferrer'); }
+                if (link.url && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); window.location.href = link.url; }
               }}
               style={{ opacity: link.url ? 1 : 0.5, cursor: link.url ? 'pointer' : 'default' }}
               aria-label={link.title}
