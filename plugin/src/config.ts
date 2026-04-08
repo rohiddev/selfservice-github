@@ -8,7 +8,7 @@ export const IDP_BASE = `https://${HARNESS_HOST}/ng/account/${HARNESS_ACCOUNT_ID
 
 // ── Workflow URLs ─────────────────────────────────────────────────────────────
 export const WORKFLOW_URLS = {
-  createRepo:   `${IDP_BASE}/entities/view/account/workflow2_github_repo_git_ops`,
+  createRepo:   `${IDP_BASE}/create/templates/account/v2_github_repo_ad_provisioner`,
   k8sOnboarding:`${IDP_BASE}/create/templates/accountv2_PaaS_Namespace_Onboarding`,
   publicCloud:  `${IDP_BASE}/create/templates/account/platform_public_cloud_onboarding`,
   temsReserve:  `${IDP_BASE}/create/templates/account/tems_reserve_environment`,
