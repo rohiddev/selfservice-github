@@ -201,7 +201,7 @@ export function ServiceCard({ icon, title, description, status, workflowUrl, vid
         <Button
           className={classes.launchBtn}
           disabled={isDisabled}
-          onClick={() => { if (!isDisabled) { window.location.href = workflowUrl; } }}
+          onClick={() => { if (!isDisabled) { window.open(workflowUrl, '_blank', 'noopener,noreferrer'); } }}
           endIcon={<Icon style={{ fontSize: 16 }}>arrow_forward</Icon>}
           aria-label={`Launch ${title} workflow`}
         >
